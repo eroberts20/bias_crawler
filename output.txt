@@ -1,0 +1,8 @@
+<Response [200]>
+<Response [200]>
+['http://www.nytimes.com/newsletters/sample/opinion-today?pgtype=subscriptionspage&version=new&contentId=TY&eventName=sample&module=newsletter-sign-up', 'http://twitter.com/NYTOpinion', 'http://www.nytimes.com/newsletters/opiniontoday/', 'http://www.nytimes.com/pages/todayspaper/index.html', 'http://www.nytimes.com/subscriptions/Multiproduct/lp839RF.html?campaignId=48JQY', 'https://www.nytimes.com/pages/opinion/index.html#sundayreview', 'https://www.youtube.com/watch?v=Qp0-mjxevzs', 'https://divinity.duke.edu/faculty/kate-bowler', 'https://www.facebook.com/nytopinion', 'https://docs.google.com/forms/d/e/1FAIpQLSfLW30xgZodF1qRAg80oWEGuDpW-1HHaL0g42G3SmvB2f4lCw/viewform?entry.8537735=https://www.nytimes.com/2016/02/14/opinion/sunday/death-the-prosperity-gospel-and-me.html']
+10
+<Response [200]>
+<Response [200]>
+['https://www.nytimes.com/2016/02/14/opinion/sunday/death-the-prosperity-gospel-and-me.html', 'https://www.splcenter.org/fighting-hate/intelligence-report/2015/bishop-eddie-long', 'https://www.splcenter.org/hatewatch/2010/09/23/words-bishop-eddie-long']
+3
