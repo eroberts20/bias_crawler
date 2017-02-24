@@ -1,20 +1,29 @@
 import requests, re
+from db import get_bias
+from web_func import *
 from bs4 import BeautifulSoup
 
 
-url = 'http://www.cnn.com/2017/02/03/us/bishop-eddie-long-i-knew/index.html'
+def url_func_choice(url, soup):
+    if url == "washingtonpost":
+        return  washingtonpost(soup)
+    elif url == "cnn":
+        return  cnn(soup)
+    elif url == "nytimes":
+        return  nytimes(soup)
+    elif url == "apnews":
+        return  apnews(soup)
+    elif url == "huffingtonpost":
+        return  huffingtonpost(soup)
+    elif url == "nbcnews":
+        return  nbcnews(soup)
+    elif url == "foxnews":
+        return  fox(soup)
+    elif "chicagotribune" in url:
+        return chicagotribune(soup)
+    else:
+        return  None
 
-def washingtonpost(html_text):
-    html_text = html_text.find("article")
-    return html_text
-
-def cnn(html_text):
-    html_text = html_text.find("div", {"itemprop": "articleBody"})
-    return html_text
-
-def nytimes(html_text):
-    html_text = html_text.find("article")
-    return html_text
 
 def url_gather(layer, url):
     if(layer == 3):
@@ -28,19 +37,16 @@ def url_gather(layer, url):
 
         #all_links = soup.find("article")
 
-        url = url.split('www.', 1)[-1]
+        if('www.' in url):
+            url = url.split('www.', 1)[-1]
+        elif("https://" in url):
+            url = url.split('https://',1)[-1]
         url = url.split('.com', 1)[0]
 
 
 
-        if url == "washingtonpost":
-            all_links = washingtonpost(soup)
-        elif url == "cnn":
-            all_links = cnn(soup)
-        elif url == "nytimes":
-            all_links = nytimes(soup)
-        else:
-            all_links = None
+        all_links = url_func_choice(url, soup)
+
 
         #print(all_links.prettify())
         if(all_links != None):
@@ -62,15 +68,17 @@ def url_gather(layer, url):
                 if "https://" in url:
                     temp = "https"  + url.split('https', 1)[-1]
                     hrefs.append(temp)
-                    url_gather(layer + 1, temp)
+                    #url_gather(layer + 1, temp)
                 if "http://" in url:
                     temp = "http" + url.split('http', 1)[-1]
                     hrefs.append(temp)
-                    url_gather(layer + 1, temp)
+                    #url_gather(layer + 1, temp)
 
 
 
-            print(hrefs)
+            #print(hrefs)
             print(len(hrefs))
+            return hrefs
+        else:
 
-url_gather(1, url)
+            return None

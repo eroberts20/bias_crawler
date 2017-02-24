@@ -1,1 +1,40 @@
-<h1> Hello World </h1>
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} </title>
+
+    {% block scripts %}
+
+    {% load static %}
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    {% endblock %}
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default">
+
+    <ul class="nav navbar-nav">
+      <li role="presentation"><a href="{% url 'index' %}">Home</a></li>
+
+
+      <li role="presentation"><a href="#">Messages</a></li>
+
+      <li role="presentation"><a href="#">About Bias Estimator</a></li>
+
+    </ul>
+    <div class="container-fluid">
+
+  </div>
+  </nav>
+
+
+    {% block content %}{% endblock %}
+
+  </body>
+</html>
