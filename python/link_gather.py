@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 
 def url_func_choice(url, soup):
-    if url == "washingtonpost":
+    if "washingtonpost" in url:
         return  washingtonpost(soup)
     elif url == "cnn":
         return  cnn(soup)
@@ -21,6 +21,8 @@ def url_func_choice(url, soup):
         return  fox(soup)
     elif "chicagotribune" in url:
         return chicagotribune(soup)
+    elif "usatoday" in url:
+        return usatoday(soup)
     else:
         return  None
 

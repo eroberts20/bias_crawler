@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static "css/app.css" %}">
+
+
+
+
+
+<div class="container" >
+
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+
+  <h4>log in</h4>
+  {{ form.errors }}
+  <div class="row">
+      <div class="col-md-6 ">
+    <label>{{ form.username.label_tag }}
+      {{ form.username }}
+    </label>
+    </div>
+  </div>
+
+  {{ form.errors }}
+  <div class="row">
+      <div class="col-md-6">
+    <label>{{ form.password.label_tag }}
+      <p> </p>
+      {{ form.password }}
+    </label>
+
+      </div>
+  </div>
+
+    <input type="submit" class="btn btn-default" value="log in" next="{% url 'index' %}">
+
+</form>
+<div id="register">
+  <a href="{% url 'register' %}"><button class="btn btn-default" >Register</button></a>
+</div>
+</div>
+
+
+{% endblock %}
