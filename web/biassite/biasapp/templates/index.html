@@ -1,40 +1,33 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html class="no-js" lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} </title>
 
-    {% block scripts %}
+{% block title %} Register {% endblock %}
 
-    {% load static %}
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-    {% endblock %}
-  </head>
-
-  <body>
-    <nav class="navbar navbar-default">
-
-    <ul class="nav navbar-nav">
-      <li role="presentation"><a href="{% url 'index' %}">Home</a></li>
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static "css/app.css" %}">
 
 
-      <li role="presentation"><a href="#">Messages</a></li>
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+      <form method="post" name="UrlForm" action="{% url 'index' %}">
+        {% csrf_token %}
+        <h4> enter url </h4>
+          {{form.url}}
+      </form>
+    </div>
+    <div class = "col-md-4">
+    </div>
+    <div class = "col-md-4">
 
-      <li role="presentation"><a href="#">About Bias Estimator</a></li>
+      <h3>Calculated Bias: {{total_bias}}</h3>
+      <h3>Social meida links: {{social_meida_ref}}</h3>
+      <h3>Self references: {{self_reference}}</h3>
+      <h3>Unknown referenced sites: {{unknowns}}</h3>
 
-    </ul>
-    <div class="container-fluid">
-
+    </div>
   </div>
-  </nav>
 
 
-    {% block content %}{% endblock %}
-
-  </body>
-</html>
+{% endblock %}
