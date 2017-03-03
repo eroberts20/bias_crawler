@@ -67,9 +67,12 @@ def bias_algo(url):
         print(social_meida_ref)
         print("self reference ", end='')
         print(self_reference)
-
+        if(len(hrefs) == 0):
+            size = 0
+        else:
+            size = 1
         return_array = []
-        return_array.extend((total_bias, social_meida_ref, self_reference, unknowns))
+        return_array.extend((total_bias, social_meida_ref, self_reference, unknowns, size))
 
         return return_array
     else:

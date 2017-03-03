@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import *
 from datetime import  *
 from extensions.bias_algo import bias_algo
+from .models import Articles
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -15,6 +16,7 @@ def index(request):
             data = form.cleaned_data
             url = data['url']
             urlForm = UrlForm()
+            form.save(request)
             total_bias = bias_algo(url)
             if(total_bias == None):
                 context = {
@@ -24,6 +26,7 @@ def index(request):
                 }
             else:
                 context = {
+                    'size':total_bias[4],
                     'total_bias':total_bias[0],
                     'self_reference':total_bias[2],
                     'social_meida_ref':total_bias[1],
@@ -41,6 +44,13 @@ def index(request):
         return render(request, 'index.html', context)
 
 
+def history(request):
+
+    context = {
+        'articles':Articles.objects.all().filter(user=request.user),
+        'page_name':'history'
+    }
+    return render(request, 'history.html', context)
 
 
 def register(request):
@@ -64,5 +74,7 @@ def register(request):
 def about(request):
     context = {}
     return render(request, 'about.html', context)
+
+
 def logout(request):
     logout(request)

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static "css/app.css" %}">
+
+
+<div class="row">
+
+    <ul class="list-group" >
+      {% for item in articles %}
+        <li class="list-group-item" id="chores">
+          <h4>  {{item.url}} </h4>
+          
+        </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+
+
+
+
+{% endblock %}

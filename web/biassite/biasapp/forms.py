@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-
+from biasapp.models import Articles
 
 class UrlForm(forms.Form):
     url = forms.CharField(
@@ -9,6 +9,15 @@ class UrlForm(forms.Form):
         max_length = 300,
         widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'url'})
     )
+
+    def save(self, request, commit=True):
+        article = Articles()
+        article.url = self.cleaned_data["url"]
+        article.user = request.user
+        if commit:
+            article.save()
+        return article
+
 
 
 class LoginForm(AuthenticationForm):
@@ -22,7 +31,7 @@ class LoginForm(AuthenticationForm):
         max_length=32,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password'})
     )
-    
+
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(
     label="Email",

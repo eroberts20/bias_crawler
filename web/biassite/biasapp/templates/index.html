@@ -20,12 +20,18 @@
     <div class = "col-md-4">
     </div>
     <div class = "col-md-4">
+      {% if size == 1 %}
 
-      <h3>Calculated Bias: {{total_bias}}</h3>
-      <h3>Social meida links: {{social_meida_ref}}</h3>
-      <h3>Self references: {{self_reference}}</h3>
-      <h3>Unknown referenced sites: {{unknowns}}</h3>
+        <h3>Calculated Bias: {{total_bias}}</h3>
+        <h3>Social meida links: {{social_meida_ref}}</h3>
+        <h3>Self references: {{self_reference}}</h3>
+        <h3>Unknown referenced sites: {{unknowns}}</h3>
 
+      {% else %}
+
+        <h3>No links in article </h3>
+
+      {% endif %}
     </div>
   </div>
 

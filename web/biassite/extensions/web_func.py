@@ -9,7 +9,7 @@ def cnn(html_text):
     return html_text
 
 def nytimes(html_text):
-    html_text = html_text.find("article", {"id":"story"})
+    html_text = html_text.find("div", {"class":"story-body-supplemental"})
     return html_text
 
 def apnews(html_text):
