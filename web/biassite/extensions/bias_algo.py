@@ -22,12 +22,14 @@ def bias_algo(url):
     self_reference = 0
     total_bias = 0
     unknowns = 0
+
     total_links = len(hrefs)
     tlinks  = []
     if(hrefs != None):
         for h in hrefs:
             turl = h
             tlinks.append(turl)
+
             if('www.' in turl):
                 turl = turl.split('www.', 1)[-1]
             elif("https://" in turl):
@@ -55,6 +57,7 @@ def bias_algo(url):
 
 
             else:
+
                 if(turl in "facebooktwitterinstagram"):
                     social_meida_ref += 1
                 else:
@@ -70,12 +73,14 @@ def bias_algo(url):
         print(social_meida_ref)
         print("self reference ", end='')
         print(self_reference)
+
         if(len(hrefs) == 0):
             size = 0
         else:
             size = 1
         return_array = []
         return_array.extend((total_bias, social_meida_ref, self_reference, unknowns, size, total_links, tlinks))
+
 
         return return_array
     else:

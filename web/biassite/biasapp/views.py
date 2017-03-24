@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect, reverse, redirect
 from .forms import *
 from datetime import  *
@@ -8,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from extensions.web_func import get_title
 
+
 # Create your views here.
 def index(request):
     if request.method=='POST':
@@ -15,6 +17,7 @@ def index(request):
         if form.is_valid():
             data = form.cleaned_data
             url = data['url']
+
             total_bias = bias_algo(url)
             urlForm = UrlForm()
             article = form.save(request)
@@ -28,11 +31,13 @@ def index(request):
                     'post':True,
                     'total_bias':"No web scraping function for this site yet",
                     'size':1,
+
                     'page_name':"home",
                     'form':urlForm
                 }
             else:
                 context = {
+
                     'post':True,
                     'size':total_bias[4],
                     'total_bias':total_bias[0],
@@ -47,11 +52,13 @@ def index(request):
     else:
         urlForm = UrlForm()
         context = {
+
             'post':False,
             'page_name':"home",
             'form':urlForm
         }
         return render(request, 'index.html', context)
+
 
 
 def history(request):
@@ -83,7 +90,6 @@ def delete(request, id):
     return HttpResponseRedirect('history')
 
 
-
 def register(request):
     form = RegisterForm()
     context = {
@@ -105,7 +111,6 @@ def register(request):
 def about(request):
     context = {}
     return render(request, 'about.html', context)
-
 
 def logout(request):
     logout(request)

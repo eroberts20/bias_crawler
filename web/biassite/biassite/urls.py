@@ -20,6 +20,7 @@ from biasapp.forms import LoginForm
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
 
     url(r'^', include('biasapp.urls')),

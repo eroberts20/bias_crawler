@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
+
 from biasapp.models import Articles
 from extensions.web_func import get_title
 
@@ -11,6 +12,7 @@ class UrlForm(forms.Form):
         max_length = 300,
         widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'url'})
     )
+
 
     def save(self, request,  commit=True):
         article = Articles()

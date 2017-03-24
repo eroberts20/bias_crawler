@@ -2,6 +2,7 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
+
 # Create your models here
 
 class Articles(models.Model):
@@ -16,3 +17,5 @@ class Url(models.Model):
     link_url =  models.CharField(max_length=301)
     article = models.ForeignKey(Articles, on_delete=models.CASCADE)
     title = models.CharField(max_length=300, null=True)
+
+# Create your models here.

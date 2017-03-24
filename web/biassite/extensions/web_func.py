@@ -10,6 +10,7 @@ def get_title(url):
         return "couldn't fetch title"
 
 
+
 def washingtonpost(html_text):
     html_text = html_text.find("article")
     return html_text
