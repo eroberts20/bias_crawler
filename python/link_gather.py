@@ -33,7 +33,7 @@ def url_gather(layer, url):
     else:
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
-        print(page)
+        #print(page)
 
 
 
@@ -48,7 +48,10 @@ def url_gather(layer, url):
 
 
         all_links = url_func_choice(url, soup)
+        #where I should gather the sentence as well
 
+        links_sentences = [()]
+        #for href in all_links
 
         #print(all_links.prettify())
         if(all_links != None):

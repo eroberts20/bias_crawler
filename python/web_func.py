@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+ from bs4 import BeautifulSoup
 
 def washingtonpost(html_text):
     html_text = html_text.find("article")
