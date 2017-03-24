@@ -4,8 +4,9 @@
 {% block title %} Register {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static "css/app.css" %}">
 
+{% load static from staticfiles %}
+<link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
 
   <div class="row">
     <div class="col-md-3">
@@ -20,19 +21,36 @@
     <div class = "col-md-4">
     </div>
     <div class = "col-md-4">
-      {% if size == 1 %}
+      {% if post == True %}
+        {% if size == 1 %}
 
-        <h3>Calculated Bias: {{total_bias}}</h3>
-        <h3>Social meida links: {{social_meida_ref}}</h3>
-        <h3>Self references: {{self_reference}}</h3>
-        <h3>Unknown referenced sites: {{unknowns}}</h3>
+          <h3>Calculated Bias: {{total_bias}}</h3>
+          <h3>{{ social_perc | floatformat:2 }}% of links in article link to social meida</h3>
+          <h3> {{self_reference |floatformat:2 }}% of links are to original website</h3>
+          <h3>{{unknowns}} links to websites with unknown bias</h3>
 
-      {% else %}
+        {% else %}
 
-        <h3>No links in article </h3>
+          <h3>No links in article </h3>
 
-      {% endif %}
+        {% endif %}
     </div>
+          <br/>
+        </div>
+      <br/>
+      <br/>
+      <div class="row">
+    <div class = "col-md-3">
+
+  </div>
+    <div class = "col-md-6">
+
+          <p> information about calculated bias: -10 highly liberal, 0 nuetral, 10 higihly conservative
+        average of all links in article with known bias taken to calculate bias </p>
+
+    </div>
+      {% endif %}
+
   </div>
 
 

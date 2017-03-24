@@ -1,4 +1,14 @@
 from bs4 import BeautifulSoup
+import requests, re
+
+def get_title(url):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    if(len(soup('title')) != 0):
+        return  soup('title')[0].string
+    else:
+        return "couldn't fetch title"
+
 
 def washingtonpost(html_text):
     html_text = html_text.find("article")

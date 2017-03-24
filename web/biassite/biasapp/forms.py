@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from biasapp.models import Articles
+from extensions.web_func import get_title
+
 
 class UrlForm(forms.Form):
     url = forms.CharField(
@@ -10,13 +12,18 @@ class UrlForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'url'})
     )
 
-    def save(self, request, commit=True):
+    def save(self, request,  commit=True):
         article = Articles()
-        article.url = self.cleaned_data["url"]
+        article.article_url = self.cleaned_data["url"]
         article.user = request.user
-        if commit:
-            article.save()
-        return article
+
+        article.title = get_title(article.article_url)
+        try:
+            check = Articles.objects.get(url=article.article_url)
+        except:
+            if commit:
+                article.save()
+            return article
 
 
 

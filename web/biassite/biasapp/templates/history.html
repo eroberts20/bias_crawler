@@ -9,17 +9,31 @@
 
 
 <div class="row">
-
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-6">
     <ul class="list-group" >
       {% for item in articles %}
+
         <li class="list-group-item" id="chores">
-          <h4>  {{item.url}} </h4>
-          
+          <div class="clearfix">
+          <h4><a href="{% url 'article' item.id %}" style="color: #60707c; text-decoration: none;">{{item.title}}  </a> </h4>
+
+                  <p> <a href="{{item.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> link to article </a></p>
+                  <span class="pull-right">
+                    <span class="btn btn-xs btn-default" next="#">
+                      <a href="{% url 'delete' item.id %}" style="color: #60707c;">
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true">   </span>
+                      </a>
+                      </span>
+                    </span>
+                  </span>
+          </div>
         </li>
       {% endfor %}
     </ul>
-
   </div>
+</div>
 
 
 

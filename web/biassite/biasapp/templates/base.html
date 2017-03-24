@@ -12,19 +12,21 @@
     {% load static %}
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
+    {% load static from staticfiles %}
+    <link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
     {% endblock %}
   </head>
 
   <body>
+
     <nav class="navbar navbar-default">
 
     <ul class="nav navbar-nav">
       <li role="presentation"><a href="{% url 'index' %}">Home</a></li>
 
-
+      {% if user.is_authenticated %}
       <li role="presentation"><a href="{% url 'history' %}" >Previously Searched Articles</a></li>
-
+      {% endif %}
       <li role="presentation"><a href="{% url 'about' %}">About Bias Estimator</a></li>
 
 
