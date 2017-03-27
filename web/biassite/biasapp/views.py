@@ -23,8 +23,8 @@ def index(request):
             article = form.save(request)
 
             for link in total_bias[6]:
-                title = get_title(link)
-                tmp_url = Url(link_url = link, article=article, title=title)
+                title = get_title(link[0])
+                tmp_url = Url(link_url = link[0], article=article, title=title, text=link[1][0], positive = link[1][1]['pos'], negative = link[1][1]['neg'], neutral = link[1][1]['neu'])
                 tmp_url.save()
             if(total_bias == None):
                 context = {

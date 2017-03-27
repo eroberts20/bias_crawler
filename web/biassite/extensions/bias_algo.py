@@ -2,7 +2,7 @@ import requests, re
 from bs4 import BeautifulSoup
 from extensions.link_gather import url_gather
 from extensions.db import *
-
+from extensions.sentence import sentiment_api
 
 
 def bias_algo(url):
@@ -27,8 +27,10 @@ def bias_algo(url):
     tlinks  = []
     if(hrefs != None):
         for h in hrefs:
-            turl = h
-            tlinks.append(turl)
+            turl = h[0]
+            push = str.join(u'\n',map(str,h[1]))
+            push = sentiment_api(push)
+            tlinks.append((turl, push))
 
             if('www.' in turl):
                 turl = turl.split('www.', 1)[-1]
@@ -37,6 +39,7 @@ def bias_algo(url):
             turl = turl.split('.com', 1)[0]
             print("*********************")
             print("this is the url " + turl)
+
             bias = get_bias(turl)
             if(url_short == turl):
                 self_reference += 1
@@ -80,7 +83,16 @@ def bias_algo(url):
             size = 1
         return_array = []
         return_array.extend((total_bias, social_meida_ref, self_reference, unknowns, size, total_links, tlinks))
+        '''
+        0 total_bias is calculated bias
+        1 social_meida_ref is number of links in article to social media
+        2 self_reference is number of links in article to own domain
+        3 unknowns are links in article not in my database
+        4 size whether or not there are any links at all
+        5 total_links is number of total links
+        6 tlinks is the array of urls and dict of pos, neg, neu inside of tuple
 
+        '''
 
         return return_array
     else:

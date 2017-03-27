@@ -1,0 +1,75 @@
+Traceback (most recent call last):
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/mysql/base.py", line 110, in execute
+    return self.cursor.execute(query, args)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/cursors.py", line 250, in execute
+    self.errorhandler(self, exc, value)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/connections.py", line 50, in defaulterrorhandler
+    raise errorvalue
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/cursors.py", line 247, in execute
+    res = self._query(query)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/cursors.py", line 411, in _query
+    rowcount = self._do_query(q)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/cursors.py", line 374, in _do_query
+    db.query(q)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/connections.py", line 292, in query
+    _mysql.connection.query(self, query)
+_mysql_exceptions.OperationalError: (1426, "Too-big precision 100 specified for 'negative'. Maximum is 65.")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "manage.py", line 22, in <module>
+    execute_from_command_line(sys.argv)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/core/management/__init__.py", line 367, in execute_from_command_line
+    utility.execute()
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/core/management/__init__.py", line 359, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/core/management/base.py", line 294, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/core/management/base.py", line 345, in execute
+    output = self.handle(*args, **options)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/core/management/commands/migrate.py", line 204, in handle
+    fake_initial=fake_initial,
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/migrations/executor.py", line 115, in migrate
+    state = self._migrate_all_forwards(state, plan, full_plan, fake=fake, fake_initial=fake_initial)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/migrations/executor.py", line 145, in _migrate_all_forwards
+    state = self.apply_migration(state, migration, fake=fake, fake_initial=fake_initial)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/migrations/executor.py", line 244, in apply_migration
+    state = migration.apply(state, schema_editor)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/migrations/migration.py", line 129, in apply
+    operation.database_forwards(self.app_label, schema_editor, old_state, project_state)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/migrations/operations/fields.py", line 84, in database_forwards
+    field,
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/mysql/schema.py", line 43, in add_field
+    super(DatabaseSchemaEditor, self).add_field(model, field)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/base/schema.py", line 409, in add_field
+    self.execute(sql, params)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/base/schema.py", line 112, in execute
+    cursor.execute(sql, params)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/utils/six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/django/db/backends/mysql/base.py", line 110, in execute
+    return self.cursor.execute(query, args)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/cursors.py", line 250, in execute
+    self.errorhandler(self, exc, value)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/connections.py", line 50, in defaulterrorhandler
+    raise errorvalue
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/cursors.py", line 247, in execute
+    res = self._query(query)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/cursors.py", line 411, in _query
+    rowcount = self._do_query(q)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/cursors.py", line 374, in _do_query
+    db.query(q)
+  File "/mnt/c/Users/evank/OneDrive/chico/Spring_2017/Bias_Guage/venv/lib/python3.4/site-packages/MySQLdb/connections.py", line 292, in query
+    _mysql.connection.query(self, query)
+django.db.utils.OperationalError: (1426, "Too-big precision 100 specified for 'negative'. Maximum is 65.")

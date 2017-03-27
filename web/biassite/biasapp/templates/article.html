@@ -5,16 +5,33 @@
 {% block title %} Login {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static "css/app.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "base.css" %}">
+
+<div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-7">
 
 
-  <h4>{{article.title}}</h4>
-
-  {% for link in links %}
-
-      <p>{{link.title}}</p>
 
 
-  {% endfor %}
+    <h4>{{article.title}}</h4>
+
+    <ul class="list-group" >
+    {% for link in links %}
+
+      <li class="list-group-item" id="chores">
+
+        <h5 id="indent" ><a href="{{link.link_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{link.title}} </a></h5>
+        <p>TEXT AROUND LINK - {{link.text}} </p>
+        <p>SENTIMENT OF TEXT - positive: {{link.positive}}% negative: {{link.negative}}% neutral: {{link.neutral}}% </p>
+
+      </li>
+    {% endfor %}
+    </ul>
+
+  </div>
+
+</div>
 
 {% endblock %}

@@ -64,10 +64,16 @@ def url_gather(layer, url):
             #all_hrefs = [tag['href'] for tag in all_links.select('a[href]')]
 
             for link in all_links.findAll('a', attrs={'href': re.compile("^http://")}):
-                all_hrefs.append(link.get('href'))
+                my_text = link.parent.findAll(text=True)
+                print("MY TEXT")
+                print(my_text)
+                all_hrefs.append((link.get('href'), my_text))
 
             for link in all_links.findAll('a', attrs={'href': re.compile("^https://")}):
-                all_hrefs.append(link.get('href'))
+                my_text = link.parent.findAll(text=True)
+                print("MY TEXT")
+                print(my_text)
+                all_hrefs.append((link.get('href'), my_text))
 
 
 
@@ -75,19 +81,20 @@ def url_gather(layer, url):
             hrefs = []
 
             for url in all_hrefs:
-                if "https://" in url:
-                    temp = "https"  + url.split('https', 1)[-1]
-                    hrefs.append(temp)
+                if "https://" in url[0]:
+                    temp = "https"  + url[0].split('https', 1)[-1]
+                    hrefs.append((temp, url[1]))
                     #url_gather(layer + 1, temp)
-                if "http://" in url:
-                    temp = "http" + url.split('http', 1)[-1]
-                    hrefs.append(temp)
+                if "http://" in url[0]:
+                    temp = "http" + url[0].split('http', 1)[-1]
+                    hrefs.append((temp, url[1]))
                     #url_gather(layer + 1, temp)
 
 
 
             #print(hrefs)
             print(len(hrefs))
+
             return hrefs
         else:
 
