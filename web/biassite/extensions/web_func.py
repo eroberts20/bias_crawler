@@ -2,17 +2,26 @@ from bs4 import BeautifulSoup
 import requests, re
 
 def get_title(url):
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    if(len(soup('title')) != 0):
-        return  soup('title')[0].string
-    else:
+    try:
+        page = requests.get(url)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        if(len(soup('title')) != 0):
+            return  soup('title')[0].string
+        else:
+            return "couldn't fetch title"
+    except requests.exceptions.RequestException as e:  # This is the correct synta
         return "couldn't fetch title"
+
+
 
 
 
 def washingtonpost(html_text):
     html_text = html_text.find("article")
+    return html_text
+
+def fivethirtyeight(html_text):
+    html_text = html_text.find("div", {"class":"entry-content single-post-content"})
     return html_text
 
 def cnn(html_text):
@@ -25,12 +34,13 @@ def nytimes(html_text):
 
 def apnews(html_text):
     html_text = html_text.find("div", {"class": "articleBody"})
-    print(html_text)
     return html_text
 
+'''
 def huffingtonpost(html_text):
     html_text = html_text.find("div", {"class": "entry__text js-entry-text"})
     return html_text
+'''
 
 def fox(html_text):
     html_text = html_text.find("div", {"class":"article-text"})
@@ -62,4 +72,8 @@ def latimes(html_text):
 
 def buzzfeed(html_text):
     html_text = html_text.find("div", {"class":"buzz_superlist_item_text"})
+    return html_text
+
+def wsj(html_text):
+    html_text = html_text.find("div", {"itemprop": "articleBody"})
     return html_text

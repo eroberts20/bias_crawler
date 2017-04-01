@@ -8,6 +8,7 @@
 
 {% load static from staticfiles %}
 <link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
+{% if user.is_authenticated %}
 
   <div class="row">
     <div class="col-md-3">
@@ -29,6 +30,13 @@
           <h3>{{ social_perc | floatformat:2 }}% of links in article link to social meida</h3>
           <h3> {{self_reference |floatformat:2 }}% of links are to original website</h3>
           <h3>{{unknowns}} links to websites with unknown bias</h3>
+          <h3>{{total_links}} total links in article</h3>
+
+
+        {% elif size == 2 %}
+          <h3> No web scraping information for this website. </h3>
+
+
 
         {% else %}
 
@@ -54,7 +62,16 @@
 
 
     </div>
-  
 
+{% else %}
+<div class="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-3">
+  <h3 class = "stats"> Must be logged in to run article </h3>
+  <a type="button" class="btn btn-primary" href="{% url 'login' %}">Log In</a>
+</div>
+</div>
+{% endif %}
 
 {% endblock %}

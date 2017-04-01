@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Register {% endblock %}
+
+
+{% block content %}
+
+{% load static from staticfiles %}
+<link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
+
+<div class="row" >
+  <div class="col-md-4"></div>
+  <div class="col-md-6">
+    <form action="{% url 'stats' %}" method="get">
+        <label for="featured">Pick Website</label>
+        <select name="featured">
+            {% for uni in unique %}
+              <option   name="featured" value={{uni}} />{{ uni }} </option>
+
+
+            {% endfor %}
+        <input type="submit"  />
+
+    </form>
+  </div>
+</div>
+
+
+{% if articles %}
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <h3 class="stats"> {{website }} </h3>
+    <p class="stats"> AllSides.com Bias of this website: {{bias}} </p>
+    <p class="stats" > average bias: {{average_bias |floatformat:5 }} </p>
+    <p class="stats" > average number of links per article: {{average_links}} </p>
+
+
+    {% for item in articles %}
+    <li class="list-group-item" id="chores">
+      <div class="clearfix">
+      <h4><a href="{% url 'article' item.id %}" style="color: #60707c; text-decoration: none;">{{item.title}}  </a> </h4>
+
+              <p> <a href="{{item.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> link to article </a></p>
+
+      </div>
+    </li>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

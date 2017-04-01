@@ -14,11 +14,22 @@ class UrlForm(forms.Form):
     )
 
 
-    def save(self, request,  commit=True):
+    def save(self,total_bias,  request,  commit=True):
+        turl = self.cleaned_data["url"]
+        if('www.' in self.cleaned_data["url"]):
+            turl =self.cleaned_data["url"].split('www.', 1)[-1]
+        elif("https://" in turl):
+            turl = turl.split('https://',1)[-1]
+        turl = turl.split('.com', 1)[0]
         article = Articles()
+        article.website = turl
         article.article_url = self.cleaned_data["url"]
         article.user = request.user
-
+        article.calc_bias = total_bias[0]
+        article.social_meida_ref = total_bias[1]
+        article.unknown_links = total_bias[3]
+        article.total_links = total_bias[5]
+        article.self_reference = total_bias[2]
         article.title = get_title(article.article_url)
         try:
             check = Articles.objects.get(url=article.article_url)

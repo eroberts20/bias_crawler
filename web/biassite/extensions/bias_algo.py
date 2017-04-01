@@ -22,9 +22,10 @@ def bias_algo(url):
     self_reference = 0
     total_bias = 0
     unknowns = 0
-
-    total_links = len(hrefs)
+    if(hrefs != None):
+        total_links = len(hrefs)
     tlinks  = []
+
     if(hrefs != None):
         for h in hrefs:
             turl = h[0]
@@ -40,22 +41,13 @@ def bias_algo(url):
             print("*********************")
             print("this is the url " + turl)
 
-            bias = get_bias(turl)
+            tmp_bias = get_bias(turl)
             if(url_short == turl):
                 self_reference += 1
-            if(bias != 0):
+            if(tmp_bias != None):
                 print("bias ", end='')
-                print(bias)
-                if(bias == 1):
-                    tmp_bias = -10
-                elif(bias == 2):
-                    tmp_bias = -5
-                elif(bias == 3):
-                    tmp_bias = 0
-                elif(bias == 4):
-                    tmp_bias = 5
-                elif(bias == 5):
-                    tmp_bias = 10
+                print(tmp_bias)
+                total_bias = (total_bias + tmp_bias) / 2
 
 
 
@@ -66,17 +58,17 @@ def bias_algo(url):
                 else:
                     unknowns += 1
                 print("NO DATA ON SITE")
+                tmp_bias = 0
 
-            total_bias = (total_bias + tmp_bias) / 2
 
-
+        '''
         print("total_bias: ", end='')
         print(total_bias)
         print("social media references ", end='')
         print(social_meida_ref)
         print("self reference ", end='')
         print(self_reference)
-
+        '''
         if(len(hrefs) == 0):
             size = 0
         else:

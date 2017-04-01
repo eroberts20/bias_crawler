@@ -8,30 +8,57 @@
 <link rel="stylesheet" type="text/css" href="{% static "base.css" %}">
 
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-3">
   </div>
-  <div class="col-md-7">
+  <div class="col-md-6">
 
 
 
+      <center>
+    <h3><a href="{{article.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{article.title}}</a></h3>
 
-    <h4>{{article.title}}</h4>
 
+        {% if size != 0 %}
+
+          <h4>Calculated Bias: {{article.calc_bias}}</h4>
+          <h4>{{ social_perc | floatformat:2 }}% of links in article link to social meida</h4>
+          <h4> {{self_reference |floatformat:2 }}% of links are to original website</h4>
+          <h4>{{unknowns}} links to websites with unknown bias</h4>
+
+        {% else %}
+
+          <h4>No links in article </h4>
+
+        {% endif %}
+      </center>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
     <ul class="list-group" >
     {% for link in links %}
 
       <li class="list-group-item" id="chores">
 
         <h5 id="indent" ><a href="{{link.link_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{link.title}} </a></h5>
-        <p>TEXT AROUND LINK - {{link.text}} </p>
+        <div class="dropdown">
+          <button type="button" class="btn btn-primary">Text Around Link</button>
+            <div class="dropdown-content">
+              {{link.text}}
+            </div>
+          </div>
+          <p> </p>
         <p>SENTIMENT OF TEXT - positive: {{link.positive}}% negative: {{link.negative}}% neutral: {{link.neutral}}% </p>
 
       </li>
     {% endfor %}
     </ul>
-
+    </div>
   </div>
 
-</div>
 
 {% endblock %}

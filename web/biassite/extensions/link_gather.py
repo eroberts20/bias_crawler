@@ -13,8 +13,8 @@ def url_func_choice(url, soup):
         return  nytimes(soup)
     elif url == "apnews":
         return  apnews(soup)
-    elif url == "huffingtonpost":
-        return  huffingtonpost(soup)
+#   elif url == "huffingtonpost":
+#       return  huffingtonpost(soup)
     elif url == "nbcnews":
         return  nbcnews(soup)
     elif url == "foxnews":
@@ -31,6 +31,10 @@ def url_func_choice(url, soup):
         return latimes(soup)
     elif "buzzfeed" in url:
         return buzzfeed(soup)
+    elif "fivethirtyeight" in url:
+        return fivethirtyeight(soup)
+    elif "wsj" in url:
+        return wsj(soup)
     else:
         return  None
 
@@ -41,7 +45,7 @@ def url_gather(layer, url):
     else:
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
-        print(page)
+        #print(page)
 
 
 
@@ -65,14 +69,10 @@ def url_gather(layer, url):
 
             for link in all_links.findAll('a', attrs={'href': re.compile("^http://")}):
                 my_text = link.parent.findAll(text=True)
-                print("MY TEXT")
-                print(my_text)
                 all_hrefs.append((link.get('href'), my_text))
 
             for link in all_links.findAll('a', attrs={'href': re.compile("^https://")}):
                 my_text = link.parent.findAll(text=True)
-                print("MY TEXT")
-                print(my_text)
                 all_hrefs.append((link.get('href'), my_text))
 
 
@@ -93,7 +93,6 @@ def url_gather(layer, url):
 
 
             #print(hrefs)
-            print(len(hrefs))
 
             return hrefs
         else:
