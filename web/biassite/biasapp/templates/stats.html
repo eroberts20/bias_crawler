@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Register {% endblock %}
+{% block title %} BiasGuage {% endblock %}
 
 
 {% block content %}
@@ -11,18 +11,20 @@
 
 <div class="row" >
   <div class="col-md-4"></div>
-  <div class="col-md-6">
-    <form action="{% url 'stats' %}" method="get">
+  <div class="col-md-2">
+    <form  action="{% url 'stats' %}"  method="get">
         <label for="featured">Pick Website</label>
-        <select name="featured">
+        <select class="form-control" name="featured">
             {% for uni in unique %}
               <option   name="featured" value={{uni}} />{{ uni }} </option>
 
 
             {% endfor %}
-        <input type="submit"  />
+            <select>
+        <input class="form-control" id="right" type="submit"  />
 
-    </form>
+  </form>
+
   </div>
 </div>
 

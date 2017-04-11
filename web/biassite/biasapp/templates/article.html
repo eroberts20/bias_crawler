@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %} Login {% endblock %}
+{% block title %} BiasGuage {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static "base.css" %}">
@@ -36,23 +36,37 @@
 
   </div>
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
+
+
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Similar Articles
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for link in similar %}
+            <li><a href="{{link.1}}" target="_blank">{{link.0}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+
     <ul class="list-group" >
+      <h4> Links in Article: </h4>
     {% for link in links %}
 
       <li class="list-group-item" id="chores">
 
         <h5 id="indent" ><a href="{{link.link_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{link.title}} </a></h5>
         <div class="dropdown">
-          <button type="button" class="btn btn-primary">Text Around Link</button>
+          <button type="button" class="btn btn-primary">SENTIMENT OF TEXT </button>
             <div class="dropdown-content">
               {{link.text}}
             </div>
           </div>
-          <p> </p>
-        <p>SENTIMENT OF TEXT - positive: {{link.positive}}% negative: {{link.negative}}% neutral: {{link.neutral}}% </p>
+
+        <p id=:"right">positive: {{link.positive}}% negative: {{link.negative}}% neutral: {{link.neutral}}% </p>
 
       </li>
     {% endfor %}

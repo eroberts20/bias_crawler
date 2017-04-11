@@ -14,6 +14,7 @@ class Articles(models.Model):
     unknown_links = models.IntegerField(default=0)
     total_links = models.IntegerField(default=1)
     self_reference = models.IntegerField(default=0)
+    posted_on = models.DateTimeField(auto_now_add=True)
 
     #others fields...
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -1,11 +1,13 @@
+
+
 {% extends "base.html" %}
 
 {% load static %}
 
-{% block title %} Login {% endblock %}
+{% block title %} BiasGuage {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static "css/app.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "base.css" %}">
 
 
 <div class="row">
@@ -13,29 +15,73 @@
   </div>
   <div class="col-md-6">
     <ul class="list-group" >
-      {% for item in articles %}
+      {% for item in object_list %}
 
         <li class="list-group-item" id="chores">
           <div class="clearfix">
           <h4><a href="{% url 'article' item.id %}" style="color: #60707c; text-decoration: none;">{{item.title}}  </a> </h4>
 
-                  <p> <a href="{{item.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> link to article </a></p>
-                  <span class="pull-right">
-                    <span class="btn btn-xs btn-default" next="#">
-                      <a href="{% url 'delete' item.id %}" style="color: #60707c;">
-                      <span class="glyphicon glyphicon-remove" aria-hidden="true">   </span>
-                      </a>
-                      </span>
-                    </span>
-                  </span>
+                  <p> <a href="{{item.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> link to article </a>
+                    <span class="pull-right">
+                      <span class="btn btn-xs btn-default" next="#">
+                        <a href="{% url 'delete' item.id %}" style="color: #60707c;">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true">   </span>
+                        </a>
+                        </span>
+                      </span></p>
+
+
           </div>
         </li>
       {% endfor %}
     </ul>
   </div>
 </div>
+<div class ="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4">
 
+    {% if is_paginated %}
+      <nav>
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li>
+              <a href="?page={{ page_obj.previous_page_number }}">
+                <span>Previous</span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#">
+                <span>Previous</span>
+              </a>
+            </li>
+          {% endif %}
 
+          {% for page in paginator.page_range %}
+            <li {% if page == page_obj.number %}class="active"{% endif %}>
+              <a href="?page={{ page }}">{{ page }}</a>
+            </li>
+          {% endfor %}
 
+          {% if page_obj.has_next %}
+            <li>
+              <a href="?page={{ page_obj.next_page_number }}">
+                <span>Next</span>
+              </a>
+            </li>
+          {% else %}
+            <li {% if not page_obj.has_next %}class="disabled"{% endif %}>
+              <a href="#">
+                <span>Next</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+</div>
+</div>
+{% endif %}
 
 {% endblock %}

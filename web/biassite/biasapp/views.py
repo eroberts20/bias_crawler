@@ -4,11 +4,21 @@ from .forms import *
 from datetime import  *
 from extensions.bias_algo import bias_algo
 from extensions.db import get_bias
+from extensions.google_search import similar_articles
 from .models import Articles, Url
+from django.views.generic import ListView
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from extensions.web_func import get_title
+
+
+class ArticleListView(ListView):
+    #model = Articles.objects.filter(user=self.request.user)
+    paginate_by = 5
+    template_name = 'history.html'
+    def get_queryset(self):
+        return Articles.objects.filter(user=self.request.user).order_by('-posted_on')
 
 
 # Create your views here.
@@ -87,27 +97,22 @@ def index(request):
 
 
 
-def history(request):
-
-    context = {
-        'articles':Articles.objects.all().filter(user=request.user).order_by('-id')[:10],
-        'page_name':'history'
-    }
-    return render(request, 'history.html', context)
 
 def article(request, id):
     article =  Articles.objects.get(id=id)
     links = []
-
-    links = Url.objects.all().filter(article=article)
+    similar = []
+    links = Url.objects.all().filter(article=article).reverse()
     size = links.count()
-    print(size)
+    similar = similar_articles(article.title, article.website)
+    similar.pop(0)
     context = {
         'article':article,
         'social_perc':article.social_meida_ref/article.total_links,
         'self_reference':article.self_reference/article.total_links,
         'unknowns':article.unknown_links,
         'size':article.total_links,
+        'similar':similar,
         'links':links
     }
 
@@ -117,7 +122,7 @@ def article(request, id):
 
 def delete(request, id):
     article = Articles.objects.get(id=id).delete()
-    return HttpResponseRedirect('history')
+    return redirect(ArticleListView)
 
 
 def register(request):

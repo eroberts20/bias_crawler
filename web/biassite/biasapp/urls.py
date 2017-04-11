@@ -2,12 +2,13 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from biasapp.views import ArticleListView
 
 urlpatterns = [
 
     url(r'^$', views.index, name='index'),
 
-    url(r'history$', views.history, name='history'),
+    url(r'^history/$', ArticleListView.as_view(), name='history'),
     url(r'^(?P<id>[0-9]+)/article/$', views.article, name='article'),
     url(r'^(?P<id>[0-9]+)/delete/$', views.delete, name='delete'),
     url(r'^stats$', views.stats, name='stats'),

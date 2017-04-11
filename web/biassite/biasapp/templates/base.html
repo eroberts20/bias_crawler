@@ -11,7 +11,9 @@
 
     {% load static %}
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
     {% load static from staticfiles %}
     <link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
@@ -24,31 +26,46 @@
 
     <nav class="navbar navbar-default">
 
-    <ul class="nav navbar-nav">
-      <li role="presentation"><a href="{% url 'index' %}">Home</a></li>
+        <div class="navbar-header">
+           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+             <span class="sr-only">Toggle navigation</span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
+           <a class="navbar-brand" href="{% url 'index' %}">BiasGuage</a>
+      </div>
 
 
-      {% if user.is_authenticated %}
-      <li role="presentation"><a href="{% url 'history' %}" >Previously Searched Articles</a></li>
-
-      {% endif %}
-      <li role="presentation"><a href="{% url 'stats' %}">Newsites Stats</a></li>
-
-      <li role="presentation"><a href="{% url 'about' %}">About Bias Estimator</a></li>
 
 
 
-    </ul>
-    <ul  class="nav navbar-nav navbar-right" id="log">
-      {% if user.is_authenticated %}
 
-        <li><a >Hi {{request.user.username}}</a></li>
-        <li ><a href="/logout/">Logout.....</a></li>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              {% if user.is_authenticated %}
+              <li role="presentation"><a href="{% url 'history' %}" >Previously Searched Articles</a></li>
 
-      {% else %}
-        <li class="nav navbar-nav navbar-right"><a href="{% url 'login' %}">Log In.....</a></li>
-      {% endif %}
-    </ul>
+              {% endif %}
+              <li role="presentation"><a href="{% url 'stats' %}">Newsites Stats</a></li>
+
+              <li role="presentation"><a href="{% url 'about' %}">About Bias Estimator</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+
+                  <li><a >Hi {{request.user.username}}</a></li>
+                  <li ><a href="/logout/">Logout</a></li>
+                {% else %}
+                  <li class="nav navbar-nav navbar-right"><a href="{% url 'login' %}">Log In</a></li>
+                {% endif %}
+
+            </ul>
+          </div><!-- /.navbar-collapse -->
+
+
     <div class="container-fluid">
 
     </div>

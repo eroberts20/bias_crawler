@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Register {% endblock %}
+{% block title %} BiasGuage {% endblock %}
 
 
 {% block content %}
@@ -42,6 +42,7 @@
 
           <h3>No links in article </h3>
 
+
         {% endif %}
     </div>
           <br/>
@@ -49,19 +50,30 @@
       <br/>
       <br/>
       <div class="row">
-    <div class = "col-md-3">
-
-  </div>
+    <div class = "col-md-3"></div>
     <div class = "col-md-6">
 
-          <p> information about calculated bias: -10 highly liberal, 0 nuetral, 10 higihly conservative
+          <p> information about calculated bias: -1 highly liberal, 0 nuetral, 1 higihly conservative
         average of all links in article with known bias taken to calculate bias </p>
 
     </div>
+      </div>
+      {% else %}
+      <div class='row'>
+        <br/>
+        <div class='col-md-12'>
+          <p> To begin, enter the url of a news article from any of the top news sites. </p>
+          <p>  We'll take a look at all the links in the article along with other heuristics to try and provide you with a context for figuring out the bias of that particular article.</p>
+          <p> For a complete list of news sources we can scrape from, check out AllSides list of top newsites
+            <a href="https://www.allsides.com/bias/bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=1&field_featured_bias_rating_value=1&title="  target="_blank"> here</a>
+
+          </p>
+        </div>
+      </div>
       {% endif %}
 
 
-    </div>
+
 
 {% else %}
 <div class="row">
