@@ -7,6 +7,8 @@ from extensions.db import get_bias
 from extensions.google_search import similar_articles
 from .models import Articles, Url
 from django.views.generic import ListView
+from django.shortcuts import get_object_or_404
+
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -121,8 +123,9 @@ def article(request, id):
 
 
 def delete(request, id):
-    article = Articles.objects.get(id=id).delete()
-    return redirect(ArticleListView)
+    article = get_object_or_404(Articles, pk=id)
+    article.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def register(request):

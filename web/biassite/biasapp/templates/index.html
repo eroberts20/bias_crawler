@@ -10,6 +10,7 @@
 <link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
 {% if user.is_authenticated %}
 
+
   <div class="row">
     <div class="col-md-3">
     </div>
@@ -72,7 +73,13 @@
       </div>
       {% endif %}
 
-
+      <div class="row">
+      <div class="col-md-3"></div>
+        <div class="col-md-6">
+          {% load static %}
+          <img src="{% static 'chart.JPG' %}" alt="My image" style="width:750px;height:170px;"/>
+        </div>
+      </div>
 
 
 {% else %}
@@ -84,6 +91,13 @@
   <a type="button" class="btn btn-primary" href="{% url 'login' %}">Log In</a>
 </div>
 </div>
+<div class="row">
+
+
+    {% load static %}
+    <img src="{% static 'chart.JPG' %}" alt="My image" style="width:750px;height:170px;"/>
+
 {% endif %}
+
 
 {% endblock %}
