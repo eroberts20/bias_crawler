@@ -22,9 +22,7 @@
         {% if size != 0 %}
 
           <h4>Calculated Bias: {{article.calc_bias}}</h4>
-          <h4>{{ social_perc | floatformat:2 }}% of links in article link to social meida</h4>
-          <h4> {{self_reference |floatformat:2 }}% of links are to original website</h4>
-          <h4>{{unknowns}} links to websites with unknown bias</h4>
+
 
         {% else %}
 
@@ -37,9 +35,9 @@
 
   </div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
 
 
       <div class="dropdown">
@@ -51,8 +49,17 @@
         </ul>
       </div>
 
-      <button class="btn btn-primary" type="button" id="button2" onclick="myFunction()">Show Links </button>
+      <button class="btn btn-primary" type="button" id="button2" >Article Links </button>
+      <button class="btn btn-primary" type="button" id="button3" >Article Statistics </button>
 
+    <br/>
+    <br/>
+    </div>
+  </div>
+      <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
 
 
       <ul class="list-group" id="similar_links" style="display:none">
@@ -67,14 +74,28 @@
       {% endfor %}
       </ul>
 
+      <ul class="list-group" id="stats" style="display:none">
 
+
+
+        <li class="list-group-item" id="chores">
+
+
+          <h4 style="text-align: center;" >{{ social_perc | floatformat:2 }}% of links in article link to social meida</h4>
+          <h4 style="text-align: center;"> {{self_reference |floatformat:2 }}% of links are to original website</h4>
+          <h4 style="text-align: center;">{{unknowns}} links to websites with unknown bias</h4>
+          <h4 style="text-align: center;"> {{article.edu_links}} links to .edu sites </h4>
+          <h4 style="text-align: center;"> {{article.gov_links}} links to .gov sites </h4>
+        </li>
+
+      </ul>
 
 
 
 
 
     <ul class="list-group" id="links" style="display:none">
-      <h4> Links in Article: </h4>
+
     {% for link in links %}
 
       <li class="list-group-item" id="chores">
@@ -97,12 +118,31 @@
   </div>
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   <script>
+  $( "#button3" ).click(function() {
+      var q = $('#similar_links');
+      var q2 = $('#links');
+      var vis2 = q2.is(':visible');
+      var vis = q.is(':visible');
+      if(vis === true){
+        $( "#similar_links" ).toggle();
+      }
+      if(vis2 === true){
+        $( "#links").toggle();
+      }
+      $( "#stats" ).toggle();
+
+  });
 
   $( "#button2" ).click(function() {
       var q = $('#similar_links');
       var vis = q.is(':visible');
+      var q2 = $('#stats');
+      var vis2 = q2.is(':visible');
       if(vis === true){
         $( "#similar_links" ).toggle();
+      }
+      if(vis2 === true){
+        $( "#stats").toggle();
       }
       $( "#links" ).toggle();
 
@@ -111,8 +151,13 @@
   $( "#button" ).click(function() {
     var q = $('#links');
     var vis = q.is(':visible');
+    var q2 = $('#stats');
+    var vis2 = q2.is(':visible');
     if(vis === true){
       $( "#links" ).toggle();
+    }
+    if(vis2 === true){
+      $( "#stats").toggle();
     }
     $( "#similar_links" ).toggle();
   });
