@@ -28,7 +28,7 @@
     {% endblock %}
   </head>
 
-  <body>
+  <body onload="setTimeout(function() {window.scrollTo(0, 1)}, 100)">
 
     <nav class="navbar navbar-default navbar-fixed-top">
 
@@ -86,7 +86,7 @@
     {% block content %}{% endblock %}
 
 
-    
+
 
   </body>
 </html>
