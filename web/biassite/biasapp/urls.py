@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^stats$', views.stats, name='stats'),
     url(r'about$', views.about, name='about'),
     url(r'register$', views.register, name='register'),
+    url(r'test$', views.test, name='test')
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

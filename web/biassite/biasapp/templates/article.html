@@ -18,6 +18,7 @@
     <h3><a href="{{article.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{article.title}}</a></h3>
 
 
+
         {% if size != 0 %}
 
           <h4>Calculated Bias: {{article.calc_bias}}</h4>
@@ -42,17 +43,37 @@
 
 
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Similar Articles
-        <span class="caret"></span></button>
+        <button class="btn btn-primary" type="button" id="button" >Similar Articles  </button>
         <ul class="dropdown-menu">
           {% for link in similar %}
-            <li><a href="{{link.1}}" target="_blank">{{link.0}}</a></li>
+            <li><a href="{{link.link_url}}" target="_blank">{{link.title}}</a></li>
           {% endfor %}
         </ul>
       </div>
 
+      <button class="btn btn-primary" type="button" id="button2" onclick="myFunction()">Show Links </button>
 
-    <ul class="list-group" >
+
+
+      <ul class="list-group" id="similar_links" style="display:none">
+
+      {% for link in similar %}
+
+        <li class="list-group-item" id="chores">
+
+          <h5 id="indent" ><a href="{{link.link_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{link.title}} </a></h5>
+
+        </li>
+      {% endfor %}
+      </ul>
+
+
+
+
+
+
+
+    <ul class="list-group" id="links" style="display:none">
       <h4> Links in Article: </h4>
     {% for link in links %}
 
@@ -74,6 +95,27 @@
     </ul>
     </div>
   </div>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script>
 
+  $( "#button2" ).click(function() {
+      var q = $('#similar_links');
+      var vis = q.is(':visible');
+      if(vis === true){
+        $( "#similar_links" ).toggle();
+      }
+      $( "#links" ).toggle();
+
+  });
+
+  $( "#button" ).click(function() {
+    var q = $('#links');
+    var vis = q.is(':visible');
+    if(vis === true){
+      $( "#links" ).toggle();
+    }
+    $( "#similar_links" ).toggle();
+  });
+  </script>
 
 {% endblock %}

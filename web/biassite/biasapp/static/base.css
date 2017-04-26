@@ -65,7 +65,7 @@ a:link {
 }
 
 .navbar {
-  background-color: #88BBD6;
+  background-color: #DCDCDC;
   border: none;
   box-shadow: none;
   padding-right: 20px;
@@ -77,11 +77,11 @@ a:link {
 }
 
 .list-group-item {
-  background-color: #EAEAEA
+  background-color: #DCDCDC;
 }
 
 body {
-  background-color: #FFFFFF;
+  background-color: #0981b5;
 }
 
 html,body

@@ -30,6 +30,8 @@ class UrlForm(forms.Form):
         article.unknown_links = total_bias[3]
         article.total_links = total_bias[5]
         article.self_reference = total_bias[2]
+        article.gov_links = total_bias[7]
+        article.edu_links = total_bias[8]
         article.title = get_title(article.article_url)
         try:
             check = Articles.objects.get(url=article.article_url)

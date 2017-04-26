@@ -1,3 +1,4 @@
+{% load pipeline %}
 {% load static %}
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
@@ -17,6 +18,9 @@
 
     {% load static from staticfiles %}
     <link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
+
+    {% stylesheet 'mysite_css' %}
+
     {% load static %}
     <link rel="shortcut icon" href="{% static 'favicon2.PNG' %}"/>
 
@@ -55,6 +59,8 @@
 
               <li role="presentation"><a href="{% url 'about' %}">About Bias Estimator</a></li>
 
+              <li role="presentation"><a href="{% url 'test' %}">test</a></li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -78,6 +84,9 @@
 
 
     {% block content %}{% endblock %}
+
+
+    
 
   </body>
 </html>

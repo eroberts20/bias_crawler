@@ -22,6 +22,8 @@ def bias_algo(url):
     self_reference = 0
     total_bias = 0
     unknowns = 0
+    gov = 0
+    edu = 0
     if(hrefs != None):
         total_links = len(hrefs)
     tlinks  = []
@@ -33,32 +35,37 @@ def bias_algo(url):
             push = sentiment_api(push)
             tlinks.append((turl, push))
 
-            if('www.' in turl):
-                turl = turl.split('www.', 1)[-1]
-            elif("https://" in turl):
-                turl = turl.split('https://',1)[-1]
-            turl = turl.split('.com', 1)[0]
-            print("*********************")
-            print("this is the url " + turl)
-
-            tmp_bias = get_bias(turl)
-            if(url_short == turl):
-                self_reference += 1
-            if(tmp_bias != None):
-                print("bias ", end='')
-                print(tmp_bias)
-                total_bias = (total_bias + tmp_bias) / 2
-
-
-
+            if('.gov' in turl):
+                gov += 1
+            elif('.edu' in turl):
+                edu += 1
             else:
+                if('www.' in turl):
+                    turl = turl.split('www.', 1)[-1]
+                elif("https://" in turl):
+                    turl = turl.split('https://',1)[-1]
+                turl = turl.split('.com', 1)[0]
+                print("*********************")
+                print("this is the url " + turl)
 
-                if(turl in "facebooktwitterinstagram"):
-                    social_meida_ref += 1
+                tmp_bias = get_bias(turl)
+                if(url_short == turl):
+                    self_reference += 1
+                if(tmp_bias != None):
+                    print("bias ", end='')
+                    print(tmp_bias)
+                    total_bias = (total_bias + tmp_bias) / 2
+
+
+
                 else:
-                    unknowns += 1
-                print("NO DATA ON SITE")
-                tmp_bias = 0
+
+                    if(turl in "facebooktwitterinstagram"):
+                        social_meida_ref += 1
+                    else:
+                        unknowns += 1
+                    print("NO DATA ON SITE")
+                    tmp_bias = 0
 
 
         '''
@@ -74,7 +81,7 @@ def bias_algo(url):
         else:
             size = 1
         return_array = []
-        return_array.extend((total_bias, social_meida_ref, self_reference, unknowns, size, total_links, tlinks))
+        return_array.extend((total_bias, social_meida_ref, self_reference, unknowns, size, total_links, tlinks, gov, edu))
         '''
         0 total_bias is calculated bias
         1 social_meida_ref is number of links in article to social media
@@ -83,6 +90,8 @@ def bias_algo(url):
         4 size whether or not there are any links at all
         5 total_links is number of total links
         6 tlinks is the array of urls and dict of pos, neg, neu inside of tuple
+        7 gov links
+        8 edu links
 
         '''
 

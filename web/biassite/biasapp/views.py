@@ -5,10 +5,10 @@ from datetime import  *
 from extensions.bias_algo import bias_algo
 from extensions.db import get_bias
 from extensions.google_search import similar_articles
-from .models import Articles, Url
+from .models import Articles, Url, SimilarArticle
 from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
-
+from django.core import serializers
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -45,6 +45,8 @@ def index(request):
                     'social_perc':article.social_meida_ref/article.total_links,
                     'page_name':"home",
                     'total_links':article.total_links,
+                    'gov':article.gov_links,
+                    'edu':article.edu_links,
                     'form':urlForm
                 }
             else:
@@ -78,6 +80,8 @@ def index(request):
                             'social_perc':total_bias[1]/total_bias[5],
                             'page_name':"home",
                             'total_links':total_bias[5],
+                            'edu':total_bias[8],
+                            'gov':total_bias[7],
                             'form':urlForm
                         }
                 else:
@@ -106,8 +110,20 @@ def article(request, id):
     similar = []
     links = Url.objects.all().filter(article=article).reverse()
     size = links.count()
-    similar = similar_articles(article.title, article.website)
-    similar.pop(0)
+    similar_links = SimilarArticle.objects.all().filter(article=article)
+    if similar_links:
+        similar = similar_links
+    else:
+        alike = similar_articles(article.title, article.website)
+
+        alike.pop(0)
+        for sim in alike:
+            new = SimilarArticle(link_url = sim[1], title = sim[0], article=article)
+            similar.append(new)
+            new.save()
+
+
+
     context = {
         'article':article,
         'social_perc':article.social_meida_ref/article.total_links,
@@ -148,6 +164,9 @@ def register(request):
 
 def stats(request):
     articles = Articles.objects.all()
+    articles1 = Articles.objects.all()
+    articles1 = serializers.serialize('json', Articles.objects.all())
+
 
     unique = divide_sources(articles)
 
@@ -171,6 +190,7 @@ def stats(request):
         context = {
             'average_links':average_links,
             'bias':bias,
+            'articles1':articles1,
             'website':articles[0].website,
             'average_bias':average_bias,
             'articles':articles,
@@ -197,3 +217,7 @@ def divide_sources(articles):
         unique.append(article.website)
     unique = set(unique)
     return unique
+
+def test(request):
+    context = {}
+    return render(request, 'test.html', context)

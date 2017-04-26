@@ -27,7 +27,23 @@
 
   </div>
 </div>
+<!--------------------------------------------------------------->
 
+<button onclick="myFunction()">Click me</button>
+
+<h1 id="demo">test</h1>
+<select id="leave" onchange="leaveChange()">
+<option value="5">Get Married</option>
+<option value="100">Have a Baby</option>
+<option value="90">Adopt a Child</option>
+<option value="15">Retire</option>
+<option value="15">Military Leave</option>
+<option value="15">Medical Leave</option>
+</select>
+<div id="message"></div>
+
+
+<!--------------------------------------------------------------->
 
 {% if articles %}
 <div class="row">
@@ -36,20 +52,64 @@
     <h3 class="stats"> {{website }} </h3>
     <p class="stats"> AllSides.com Bias of this website: {{bias}} </p>
     <p class="stats" > average bias: {{average_bias |floatformat:5 }} </p>
-    <p class="stats" > average number of links per article: {{average_links}} </p>
+    <p class="stats" > average number of links per article: {{average_links |floatformat:5}} </p>
 
+   <li class="list-group-item" id="chores">
+      {% for item in articles %}
 
-    {% for item in articles %}
-    <li class="list-group-item" id="chores">
-      <div class="clearfix">
-      <h4><a href="{% url 'article' item.id %}" style="color: #60707c; text-decoration: none;">{{item.title}}  </a> </h4>
+        <div class="clearfix">
+        <h4><a href="{% url 'article' item.id %}" style="color: #60707c; text-decoration: none;">{{item.title}}  </a> </h4>
 
-              <p> <a href="{{item.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> link to article </a></p>
-              
-      </div>
+                <p> <a href="{{item.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> link to article </a></p>
+
+        </div>
+
+      {% endfor %}
     </li>
-    {% endfor %}
   </div>
 </div>
 {% endif %}
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script>
+
+function myFunction() {
+    //  var article1 = articles1;
+    console.dir("{{articles}}");
+    //document.getElementById("chores").innerHTML = "Hello World";
+  //  for(var i = 0; i < article1.length; i++) {
+        // Create the list item:
+        var item = document.createElement('div');
+        var link1 = document.createElement('h4');
+        var link2 = document.createElement('p');
+        var a_in = document.createElement('a');
+      //  a_in.setAttribute('href', "{\% 'article' " + article1[0] + "\%}");
+        a_in.innerHTML = "link to article";
+        link1.appendChild(a_in);
+        link2.appendChild(document.createElement('a')/*.setAttribute('href', article1[i].article_url)*/);
+        item.className = "clearfix";
+        item.appendChild(link1);
+        item.appendChild(link2);
+        // Set its contents:
+        document.getElementById("chores").appendChild(item);
+        console.log("REACHED HERE BITCH");
+
+        // Add it to the list:
+        //list.appendChild(item);
+  //  }
+
+}
+
+function leaveChange() {
+  if (document.getElementById("leave").value != "100"){
+      document.getElementById("message").innerHTML = "Common message";
+  }
+  else{
+      document.getElementById("message").innerHTML = "Having a Baby!!";
+  }
+}
+</script>
 {% endblock %}

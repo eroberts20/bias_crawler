@@ -1,0 +1,20 @@
+{
+  "name": "eroberts20",
+  "homepage": "https://github.com/eroberts20/bias_crawler",
+  "authors": [
+    "eroberts20 <eroberts20@mail.csuchico.edu>"
+  ],
+  "description": "idk",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}

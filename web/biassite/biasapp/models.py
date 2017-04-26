@@ -15,6 +15,8 @@ class Articles(models.Model):
     total_links = models.IntegerField(default=1)
     self_reference = models.IntegerField(default=0)
     posted_on = models.DateTimeField(auto_now_add=True)
+    edu_links =  models.IntegerField(default=0)
+    gov_links =  models.IntegerField(default=0)
 
     #others fields...
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -29,5 +31,9 @@ class Url(models.Model):
     negative = models.DecimalField(decimal_places = 5, max_digits = 10, default=0.0)
     neutral = models.DecimalField(decimal_places = 5, max_digits = 10, default=0.0)
 
+class SimilarArticle(models.Model):
+    link_url =  models.CharField(max_length=700)
+    article = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    title = models.CharField(max_length=300, null=True)
 
 # Create your models here.
