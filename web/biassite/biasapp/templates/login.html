@@ -45,13 +45,14 @@
     <input type="submit" class="btn btn-default" value="log in" next="{% url 'index' %}">
 
 </form>
-  <div id="register">
-    <a href="{% url 'register' %}"><button class="btn btn-default" >Register</button></a>
-  </div>
 </div>
 </div>
-
+<div class="row">
+  <div class="col-md-4"></div>
+<div class='col-md-6'>
+<a href="{% url 'register' %}"><button class="btn btn-default" >Register</button></a>
 </div>
-
+</div>
+</div>
 
 {% endblock %}

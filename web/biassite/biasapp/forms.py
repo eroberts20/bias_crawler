@@ -33,7 +33,7 @@ class UrlForm(forms.Form):
         article.gov_links = total_bias[7]
         article.edu_links = total_bias[8]
         article.title = get_title(article.article_url)
-        #article.all_sides_bias = 
+        #article.all_sides_bias =
         try:
             check = Articles.objects.get(url=article.article_url)
         except:

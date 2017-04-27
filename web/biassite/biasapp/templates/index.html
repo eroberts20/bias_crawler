@@ -20,14 +20,24 @@
         <h4> enter url </h4>
           {{form.url}}
       </form>
+      <div class="text-center">
+        <h3><a href="{{link}}" style="color:black;"  target="_blank" > {{title}} </a></h3>
+      </div>
     </div>
     <div class = "col-md-4">
     </div>
     <div class = "col-md-4">
       {% if post == True %}
         {% if size == 1 %}
-
+        <div class="text-center">
           <h3>Calculated Bias: {{total_bias}}</h3>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <canvas id="myChart"></canvas>
+              <h4 id="leaning"></h4>
+            </div>
+          </div>
           <h4>{{ social_perc | floatformat:2 }}% of links in article link to social meida</h4>
           <h4> {{self_reference |floatformat:2 }}% of links are to original website</h4>
           <h4> {{edu}} links from .edu sites </h4>
@@ -35,7 +45,7 @@
           <h4>{{unknowns}} links to websites with unknown bias</h4>
           <h4>{{total_links}} total links in article</h4>
 
-
+        </div>
         {% elif size == 2 %}
           <h3> No web scraping information for this website. </h3>
 
@@ -53,8 +63,8 @@
       <br/>
       <br/>
       <div class="row">
-    <div class = "col-md-3"></div>
-    <div class = "col-md-6">
+    <div class = "col-md-4"></div>
+    <div class = "col-md-4">
 
           <p> information about calculated bias: -1 highly liberal, 0 nuetral, 1 higihly conservative
         average of all links in article with known bias taken to calculate bias </p>
@@ -66,7 +76,8 @@
         <div class="col-md-4"></div>
           <div class="col-md-4">
             <div class="text-center">
-                <canvas id="myChart"></canvas>
+
+
           </div>
         </div>
       </div>
@@ -77,7 +88,7 @@
           <h4> To begin, enter the url of a news article from any of the top news sites. </h4>
           <h4>  We'll take a look at all the links in the article along with other heuristics to try and provide you with a context for figuring out the bias of that particular article.</h4>
           <h4> For a complete list of news sources we can scrape from, check out AllSides list of top newsites
-            <a href="https://www.allsides.com/bias/bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=1&field_featured_bias_rating_value=1&title=" style="color:black;" target="_blank"> here</a>
+            <a href="https://www.allsides.com/bias/bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=1&field_featured_bias_rating_value=1&title=" style="color:blue;" target="_blank"> here</a>
 
           </h4>
         </div>
@@ -89,12 +100,17 @@
 
 {% else %}
 <div class="row">
-  <div class="col-md-4">
-  </div>
+  <div class="col-md-4"></div>
   <div class="col-md-3">
   <h3 class = "stats"> Must be logged in to run article </h3>
-  <a type="button" class="btn btn-primary" href="{% url 'login' %}">Log In</a>
+
+  </div>
 </div>
+<div class="row">
+  <div class="col-md-5"></div>
+  <div class="col-md-4">
+    <a type="button" class="btn btn-primary" href="{% url 'login' %}">Log In</a>
+  </div>
 </div>
 <div class="row">
 
@@ -115,21 +131,37 @@ $(function () {
     var neu
     if(bias > 0)
     {
+      if(bias < 0.5)
+      {
+        $("#leaning").html("<a href='https://www.allsides.com/bias/right-center' target='_blank'> leans right </a>");
+      }
+      else {
+        $("#leaning").html("<a href='https://www.allsides.com/bias/right' target='_blank'> right </a>");
+      }
       con = bias
-      neu = bias/2
-      lib = neu/2
+      neu = 1 - bias
+      lib = 0
     }
     else if (bias === 0)
     {
+      $("#leaning").html("<a href='https://www.allsides.com/bias/center' target='_blank'>center </a>");
       neu = 1
       con = 0
       lib = 0
     }
     else
     {
+      if(bias > -0.5)
+      {
+        $("#leaning").html("<a href='https://www.allsides.com/bias/left-center' target='_blank'> leans left </a>");
+      }
+      else {
+        $("#leaning").html("<a href='https://www.allsides.com/bias/left' target='_blank'>left </a>");
+      }
+      bias = Math.abs(bias)
       lib = bias
-      neu = bias/2
-      con = neu/2
+      neu = 1 - bias
+      con = 0
     }
     var data = [
     {
@@ -139,18 +171,18 @@ $(function () {
         label: "Conservative"
     },
     {
-        value: neu,
-        color: "#551A8B",
-        highlight: "#551A5B",
-        label: "Neutral"
-    },
-    {
         value: lib,
         color: "#336699",
         highlight: "#336679",
         label: "Liberal"
-    }
-    ]
+    },
+    {
+        value: neu,
+        color: "#faebd7",
+        highlight: "#faebd7",
+        label: "Neutral"
+    },
+  ]
 
     var option = {
     responsive: true,

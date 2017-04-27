@@ -29,7 +29,7 @@
         {% if size != 0 %}
 
           <h4>Calculated Bias: {{article.calc_bias}}</h4>
-
+          <h4 id="leaning" ></h4>
 
         {% else %}
 
@@ -116,7 +116,7 @@
             </div>
           </div>
 
-        <p id=:"right">positive: {{link.positive}}% negative: {{link.negative}}% neutral: {{link.neutral}}% </p>
+        <p id=:"right"> <h4 style="display:inline">&#128515;</h4> positive: {{link.positive}}% <h4 style="display:inline">&#128530;</h4> negative: {{link.negative}}% <h4 style="display:inline">&#128528;</h4> neutral: {{link.neutral}}%   <h4 style="display:inline"><a href="www.google.com">&nbsp;&nbsp;&#8505;</a></h4> </p>
 
       </li>
     {% endfor %}
@@ -180,22 +180,38 @@
       var neu
       if(bias > 0)
       {
+        if(bias < 0.5)
+        {
+          $("#leaning").html("<a href='https://www.allsides.com/bias/right-center' target='_blank'> 'leans right' </a>");
+        }
+        else {
+          $("#leaning").html("<a href='https://www.allsides.com/bias/right' target='_blank'> 'right' </a>");
+
+        }
         con = bias
-        neu = bias/2
-        lib = neu/2
+        neu = 1 - bias
+        lib = 0
       }
       else if (bias === 0)
       {
+        $("#leaning").html("<a href='https://www.allsides.com/bias/center' target='_blank'>'center' </a>");
         neu = 1
         con = 0
         lib = 0
       }
       else
       {
+        if(bias > -0.5)
+        {
+          $("#leaning").html("<a href='https://www.allsides.com/bias/left-center' target='_blank'> 'leans left' </a>");
+        }
+        else {
+          $("#leaning").html("<a href='https://www.allsides.com/bias/left' target='_blank'> 'left' </a>");
+        }
         bias = Math.abs(bias)
         lib = bias
-        neu = bias/2
-        con = neu/2
+        neu = 1 - bias
+        con = 0
       }
       var data = [
       {
@@ -204,18 +220,19 @@
           highlight: "#E91D2E",
           label: "Conservative"
       },
-      {
-          value: neu,
-          color: "#551A8B",
-          highlight: "#551A5B",
-          label: "Neutral"
-      },
+
       {
           value: lib,
           color: "#336699",
           highlight: "#336679",
           label: "Liberal"
-      }
+      },
+      {
+          value: neu,
+          color: "#faebd7",
+          highlight: "#faebd7",
+          label: "Neutral"
+      },
       ]
 
       var option = {
@@ -226,6 +243,8 @@
       var ctx = document.getElementById("myChart").getContext('2d');
 
       var myDoughnutChart = new Chart(ctx).Doughnut(data,option);});
+
+
 
 
   </script>

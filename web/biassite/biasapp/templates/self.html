@@ -11,14 +11,17 @@
 
 <div class="row">
   <div class="col-md-4"></div>
-  <div class="col-md-6">
+  <div class="col-md-4">
+    <div class="text-center">
     <h2> {{ user}}'s search statistics </h2>
+    <h4> {{total_searched}} articles searched total </h4>
+  </div>
 
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-6">
+  <div class="col-md-5"></div>
+  <div class="col-md-4">
     <button class="btn btn-primary" type="button" id="button1" >averages</button>
     <button class="btn btn-primary" type="button" id="button2" >trends</button>
     <button class="btn btn-primary" type="button" id="button3" >suggestions</button>
@@ -31,11 +34,12 @@
 <div class="row">
   <div class="col-md-4"></div>
   <div class="col-md-4">
-    
+
     <ul class="list-group" id="averages" style="display:none">
       <li class="list-group-item" id="chores">
-
-        <p> All Sides Ranking:1 {{link}}</p
+        <p> All Sides Ranking:1 {{link}}</p>
+        <p> {{right_percent|floatformat:2}}% of articles searched lean right </p>
+        <p> {{left_percent|floatformat:2}}% of articles searched lean left </p>
       </li>
     </ul>
 

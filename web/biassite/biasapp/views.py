@@ -39,14 +39,16 @@ def index(request):
                     'post':True,
                     'size':1,
                     'total_bias':article.calc_bias,
-                    'self_reference':article.self_reference/article.total_links,
+                    'self_reference':(article.self_reference/article.total_links) * 100,
                     'social_meida_ref':article.social_meida_ref,
                     'unknowns':article.unknown_links,
-                    'social_perc':article.social_meida_ref/article.total_links,
+                    'social_perc':(article.social_meida_ref/article.total_links) * 100,
                     'page_name':"home",
+                    'link':article.article_url,
                     'total_links':article.total_links,
                     'gov':article.gov_links,
                     'edu':article.edu_links,
+                    'title':article.title,
                     'form':urlForm
                 }
             else:
@@ -73,11 +75,13 @@ def index(request):
 
                             'post':True,
                             'size':total_bias[4],
+                            'title':title,
+                            'link':total_bias[6],
                             'total_bias':total_bias[0],
-                            'self_reference':total_bias[2]/total_bias[5],
+                            'self_reference':(total_bias[2]/total_bias[5]) * 100,
                             'social_meida_ref':total_bias[1],
                             'unknowns':total_bias[3],
-                            'social_perc':total_bias[1]/total_bias[5],
+                            'social_perc':(total_bias[1]/total_bias[5]) * 100,
                             'page_name':"home",
                             'total_links':total_bias[5],
                             'edu':total_bias[8],
@@ -126,8 +130,8 @@ def article(request, id):
 
     context = {
         'article':article,
-        'social_perc':article.social_meida_ref/article.total_links,
-        'self_reference':article.self_reference/article.total_links,
+        'social_perc': (article.social_meida_ref/article.total_links) * 100,
+        'self_reference':(article.self_reference/article.total_links) * 100,
         'unknowns':article.unknown_links,
         'size':article.total_links,
         'similar':similar,
@@ -217,7 +221,8 @@ def divide_sources(articles):
         unique.append(article.website)
     unique = set(unique)
     return unique
-
+    
+@login_required
 def self(request):
     user_articles = Articles.objects.filter(user=request.user).order_by('-posted_on')
     right_articles = user_articles.filter(calc_bias__gt=0)
@@ -226,8 +231,9 @@ def self(request):
     size = user_articles.count()
 
     context = {
-        'right_percent':right_articles.count()/size,
-        'left_percent':left_articles.count()/size,
+        'total_searched':user_articles.count(),
+        'right_percent':(right_articles.count()/size) * 100,
+        'left_percent':(left_articles.count()/size) *100,
         'user':request.user,
     }
     return render(request, 'self.html', context)
