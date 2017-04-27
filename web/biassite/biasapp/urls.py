@@ -12,8 +12,9 @@ urlpatterns = [
     url(r'^(?P<id>[0-9]+)/article/$', views.article, name='article'),
     url(r'^(?P<id>[0-9]+)/delete/$', views.delete, name='delete'),
     url(r'^stats$', views.stats, name='stats'),
-    url(r'about$', views.about, name='about'),
-    url(r'register$', views.register, name='register'),
-    url(r'test$', views.test, name='test')
+    url(r'^about$', views.about, name='about'),
+    url(r'^register$', views.register, name='register'),
+    url(r'^test$', views.test, name='test'),
+    url(r'^self$', views.self, name='self')
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

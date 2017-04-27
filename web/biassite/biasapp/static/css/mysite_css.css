@@ -65,7 +65,7 @@ a:link {
 }
 
 .navbar {
-  background-color: #88BBD6;
+  background-color: white;
   border: none;
   box-shadow: none;
   padding-right: 20px;
@@ -81,7 +81,7 @@ a:link {
 }
 
 body {
-  background-color: #FFFFFF;
+  background-color: black;
 }
 
 html,body

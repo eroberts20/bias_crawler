@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} BiasGuage {% endblock %}
+
+
+{% block content %}
+
+{% load static from staticfiles %}
+<link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-6">
+    <h2> {{ user}}'s search statistics </h2>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-6">
+    <button class="btn btn-primary" type="button" id="button1" >averages</button>
+    <button class="btn btn-primary" type="button" id="button2" >trends</button>
+    <button class="btn btn-primary" type="button" id="button3" >suggestions</button>
+
+  </div>
+
+</div>
+
+<br/>
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    
+    <ul class="list-group" id="averages" style="display:none">
+      <li class="list-group-item" id="chores">
+
+        <p> All Sides Ranking:1 {{link}}</p
+      </li>
+    </ul>
+
+    <ul class="list-group" id="trends" style="display:none">
+      <li class="list-group-item" id="chores">
+
+        <p> All Sides Ranking:2 {{link}}</p
+      </li>
+    </ul>
+
+    <ul class="list-group" id="suggestions" style="display:none">
+      <li class="list-group-item" id="chores">
+
+        <p> All Sides Ranking:3 {{link}}</p
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+$( "#button1" ).click(function() {
+    var q = $('#trends');
+    var q2 = $('#suggestions');
+    var vis2 = q2.is(':visible');
+    var vis = q.is(':visible');
+    if(vis === true){
+      $( "#trends" ).toggle();
+    }
+    if(vis2 === true){
+      $( "#suggestions").toggle();
+    }
+    $( "#averages" ).toggle();
+
+});
+
+$( "#button2" ).click(function() {
+    var q = $('#averages');
+    var vis = q.is(':visible');
+    var q2 = $('#suggestions');
+    var vis2 = q2.is(':visible');
+    if(vis === true){
+      $( "#averages" ).toggle();
+    }
+    if(vis2 === true){
+      $( "#suggestions").toggle();
+    }
+    $( "#trends" ).toggle();
+
+});
+
+$( "#button3" ).click(function() {
+  var q = $('#averages');
+  var vis = q.is(':visible');
+  var q2 = $('#trends');
+  var vis2 = q2.is(':visible');
+  if(vis === true){
+    $( "#averages" ).toggle();
+  }
+  if(vis2 === true){
+    $( "#trends").toggle();
+  }
+  $( "#suggestions" ).toggle();
+});
+</script>
+{% endblock %}

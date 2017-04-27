@@ -15,9 +15,16 @@
 
 
       <center>
-    <h3><a href="{{article.article_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{article.title}}</a></h3>
+    <h3><a href="{{article.article_url}}"  target="_blank"  style="color: black; text-decoration: none;"> {{article.title}}</a></h3>
 
-
+      <div class="row">
+        <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <div class="text-center">
+                <canvas id="myChart"></canvas>
+          </div>
+        </div>
+      </div>
 
         {% if size != 0 %}
 
@@ -37,7 +44,7 @@
   <div class="row">
     <div class="col-md-4">
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5  ">
 
 
       <div class="dropdown">
@@ -101,7 +108,7 @@
       <li class="list-group-item" id="chores">
 
         <h5 id="indent" ><a href="{{link.link_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{link.title}} </a></h5>
-        <p> All Sides Ranking: </p>
+        <p> All Sides Ranking: {{link}}</p>
         <div class="dropdown">
           <button type="button" class="btn btn-primary">SENTIMENT OF TEXT </button>
             <div class="dropdown-content">
@@ -163,4 +170,63 @@
   });
   </script>
 
+
+  <script>
+
+  $(function () {
+      var bias = {{article.calc_bias}};
+      var con
+      var lib
+      var neu
+      if(bias > 0)
+      {
+        con = bias
+        neu = bias/2
+        lib = neu/2
+      }
+      else if (bias === 0)
+      {
+        neu = 1
+        con = 0
+        lib = 0
+      }
+      else
+      {
+        bias = Math.abs(bias)
+        lib = bias
+        neu = bias/2
+        con = neu/2
+      }
+      var data = [
+      {
+          value: con,
+          color:"#E91D0E",
+          highlight: "#E91D2E",
+          label: "Conservative"
+      },
+      {
+          value: neu,
+          color: "#551A8B",
+          highlight: "#551A5B",
+          label: "Neutral"
+      },
+      {
+          value: lib,
+          color: "#336699",
+          highlight: "#336679",
+          label: "Liberal"
+      }
+      ]
+
+      var option = {
+      responsive: true,
+      };
+
+      // Get the context of the canvas element we want to select
+      var ctx = document.getElementById("myChart").getContext('2d');
+
+      var myDoughnutChart = new Chart(ctx).Doughnut(data,option);});
+
+
+  </script>
 {% endblock %}

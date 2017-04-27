@@ -218,6 +218,20 @@ def divide_sources(articles):
     unique = set(unique)
     return unique
 
+def self(request):
+    user_articles = Articles.objects.filter(user=request.user).order_by('-posted_on')
+    right_articles = user_articles.filter(calc_bias__gt=0)
+    left_articles = user_articles.filter(calc_bias__lt=0)
+    neutral_articles = user_articles.filter(calc_bias=0)
+    size = user_articles.count()
+
+    context = {
+        'right_percent':right_articles.count()/size,
+        'left_percent':left_articles.count()/size,
+        'user':request.user,
+    }
+    return render(request, 'self.html', context)
+
 def test(request):
     context = {}
     return render(request, 'test.html', context)

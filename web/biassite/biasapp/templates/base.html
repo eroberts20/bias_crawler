@@ -16,6 +16,8 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
+
+
     {% load static from staticfiles %}
     <link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
 
@@ -29,6 +31,7 @@
   </head>
 
   <body onload="setTimeout(function() {window.scrollTo(0, 1)}, 100)">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.0/js/mdb.min.js"></script>
 
     <nav class="navbar navbar-default navbar-fixed-top">
 
@@ -40,7 +43,7 @@
              <span class="icon-bar"></span>
            </button>
            {% load static %}
-           <a class="navbar-brand" > <img alt="Logo" src="{% static 'favicon2.PNG' %}" style="top:-5;" height="35" width="40"/></a>
+           <a class="navbar-brand" href="{% url 'index' %}"> <img alt="Logo" src="{% static 'favicon2.PNG' %}" style="top:-5;" height="35" width="40"/></a>
            <a class="navbar-brand" href="{% url 'index' %}" style="position:relative;">BiasGuage</a>
       </div>
 
@@ -57,9 +60,11 @@
               {% endif %}
               <li role="presentation"><a href="{% url 'stats' %}">Newsites Stats</a></li>
 
+              <li role="presentation"><a href="{% url 'self' %}"> Search Statistics</a></li>
+
               <li role="presentation"><a href="{% url 'about' %}">About Bias Estimator</a></li>
 
-              <li role="presentation"><a href="{% url 'test' %}">test</a></li>
+
 
             </ul>
 

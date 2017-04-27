@@ -28,12 +28,12 @@
         {% if size == 1 %}
 
           <h3>Calculated Bias: {{total_bias}}</h3>
-          <h3>{{ social_perc | floatformat:2 }}% of links in article link to social meida</h3>
-          <h3> {{self_reference |floatformat:2 }}% of links are to original website</h3>
-          <h3> {{edu}} links from .edu sites </h3>
-          <h3> {{gov}} links from .gov sites </h3>
-          <h3>{{unknowns}} links to websites with unknown bias</h3>
-          <h3>{{total_links}} total links in article</h3>
+          <h4>{{ social_perc | floatformat:2 }}% of links in article link to social meida</h4>
+          <h4> {{self_reference |floatformat:2 }}% of links are to original website</h4>
+          <h4> {{edu}} links from .edu sites </h4>
+          <h4> {{gov}} links from .gov sites </h4>
+          <h4>{{unknowns}} links to websites with unknown bias</h4>
+          <h4>{{total_links}} total links in article</h4>
 
 
         {% elif size == 2 %}
@@ -61,27 +61,30 @@
 
     </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <div class="text-center">
+                <canvas id="myChart"></canvas>
+          </div>
+        </div>
+      </div>
       {% else %}
       <div class='row'>
         <br/>
         <div class='col-md-12'>
-          <p> To begin, enter the url of a news article from any of the top news sites. </p>
-          <p>  We'll take a look at all the links in the article along with other heuristics to try and provide you with a context for figuring out the bias of that particular article.</p>
-          <p> For a complete list of news sources we can scrape from, check out AllSides list of top newsites
-            <a href="https://www.allsides.com/bias/bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=1&field_featured_bias_rating_value=1&title="  target="_blank"> here</a>
+          <h4> To begin, enter the url of a news article from any of the top news sites. </h4>
+          <h4>  We'll take a look at all the links in the article along with other heuristics to try and provide you with a context for figuring out the bias of that particular article.</h4>
+          <h4> For a complete list of news sources we can scrape from, check out AllSides list of top newsites
+            <a href="https://www.allsides.com/bias/bias-ratings?field_news_source_type_tid=2&field_news_bias_nid=1&field_featured_bias_rating_value=1&title=" style="color:black;" target="_blank"> here</a>
 
-          </p>
+          </h4>
         </div>
       </div>
       {% endif %}
 
-      <div class="row">
-      <div class="col-md-3"></div>
-        <div class="col-md-6">
-          {% load static %}
-          <img src="{% static 'chart.JPG' %}" alt="My image" style="width:750px;height:170px;"/>
-        </div>
-      </div>
+
 
 
 {% else %}
@@ -96,10 +99,69 @@
 <div class="row">
 
 
-    {% load static %}
-    <img src="{% static 'chart.JPG' %}" alt="My image" style="width:750px;height:170px;"/>
 
 {% endif %}
 
+
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+
+$(function () {
+    var bias = {{total_bias}};
+    var con
+    var lib
+    var neu
+    if(bias > 0)
+    {
+      con = bias
+      neu = bias/2
+      lib = neu/2
+    }
+    else if (bias === 0)
+    {
+      neu = 1
+      con = 0
+      lib = 0
+    }
+    else
+    {
+      lib = bias
+      neu = bias/2
+      con = neu/2
+    }
+    var data = [
+    {
+        value: con,
+        color:"#E91D0E",
+        highlight: "#E91D2E",
+        label: "Conservative"
+    },
+    {
+        value: neu,
+        color: "#551A8B",
+        highlight: "#551A5B",
+        label: "Neutral"
+    },
+    {
+        value: lib,
+        color: "#336699",
+        highlight: "#336679",
+        label: "Liberal"
+    }
+    ]
+
+    var option = {
+    responsive: true,
+    };
+
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("myChart").getContext('2d');
+
+    var myDoughnutChart = new Chart(ctx).Doughnut(data,option);});
+
+
+</script>
 
 {% endblock %}

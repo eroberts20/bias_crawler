@@ -10,6 +10,7 @@ class Articles(models.Model):
     website = models.CharField(max_length=100)
     title = models.CharField(max_length=300, null=True)
     calc_bias = models.DecimalField(decimal_places = 5, max_digits = 10, default=0.0)
+    #all_sides_bias = models.DecimalField(decimal_places = 5, max_digits = 10, default=0.0)
     social_meida_ref = models.IntegerField(default=0)
     unknown_links = models.IntegerField(default=0)
     total_links = models.IntegerField(default=1)
