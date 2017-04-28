@@ -14,7 +14,7 @@ class UrlForm(forms.Form):
     )
 
 
-    def save(self,total_bias,  request,  commit=True):
+    def save(self,total_bias, request,  commit=True):
         turl = self.cleaned_data["url"]
         if('www.' in self.cleaned_data["url"]):
             turl =self.cleaned_data["url"].split('www.', 1)[-1]
@@ -33,7 +33,7 @@ class UrlForm(forms.Form):
         article.gov_links = total_bias[7]
         article.edu_links = total_bias[8]
         article.title = get_title(article.article_url)
-        #article.all_sides_bias =
+        article.all_sides_bias = total_bias[9]
         try:
             check = Articles.objects.get(url=article.article_url)
         except:
@@ -70,7 +70,8 @@ class RegisterForm(UserCreationForm):
     password1 = forms.CharField(
         label="Password1",
         max_length=32,
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password1'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control',
+         'name': 'password1'})
     )
 
     password2 = forms.CharField(

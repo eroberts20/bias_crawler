@@ -50,6 +50,7 @@
       <div class="dropdown">
         <button class="btn btn-primary" type="button" id="button" >Similar Articles  </button>
         <ul class="dropdown-menu">
+
           {% for link in similar %}
             <li><a href="{{link.link_url}}" target="_blank">{{link.title}}</a></li>
           {% endfor %}
@@ -71,6 +72,9 @@
 
       <ul class="list-group" id="similar_links" style="display:none">
 
+        <li class="list-group-item" id="chores">
+              <h3 style="text-align: center;">Similar Articles </h3>
+        </li>
       {% for link in similar %}
 
         <li class="list-group-item" id="chores">
@@ -81,13 +85,13 @@
       {% endfor %}
       </ul>
 
-      <ul class="list-group" id="stats" style="display:none">
+      <ul class="list-group" id="stats" >
 
 
 
         <li class="list-group-item" id="chores">
 
-
+          <h3 style="text-align: center;"> Article Statistics </h3>
           <h4 style="text-align: center;" >{{ social_perc | floatformat:2 }}% of links in article link to social meida</h4>
           <h4 style="text-align: center;"> {{self_reference |floatformat:2 }}% of links are to original website</h4>
           <h4 style="text-align: center;">{{unknowns}} links to websites with unknown bias</h4>
@@ -102,7 +106,9 @@
 
 
     <ul class="list-group" id="links" style="display:none">
-
+      <li class="list-group-item" id="chores">
+            <h3 style="text-align: center;">Similar Links </h3>
+      </li>
     {% for link in links %}
 
       <li class="list-group-item" id="chores">
@@ -116,7 +122,16 @@
             </div>
           </div>
 
-        <p id=:"right"> <h4 style="display:inline">&#128515;</h4> positive: {{link.positive}}% <h4 style="display:inline">&#128530;</h4> negative: {{link.negative}}% <h4 style="display:inline">&#128528;</h4> neutral: {{link.neutral}}%   <h4 style="display:inline"><a href="www.google.com">&nbsp;&nbsp;&#8505;</a></h4> </p>
+        <p id=:"right">
+          <h4 style="display:inline">&#128515;</h4> positive: {{link.positive}}%
+          <h4 style="display:inline">&#128530;</h4> negative: {{link.negative}}%
+          <h4 style="display:inline">&#128528;</h4> neutral: {{link.neutral}}%
+          <h4 style="display:inline">
+
+
+
+          <a href="{% url 'naive' %}" target="_blank">&nbsp;&nbsp;&#8505;</a></h4>
+         </p>
 
       </li>
     {% endfor %}
@@ -229,8 +244,8 @@
       },
       {
           value: neu,
-          color: "#faebd7",
-          highlight: "#faebd7",
+          color: "gray",
+          highlight: "gray",
           label: "Neutral"
       },
       ]

@@ -56,10 +56,10 @@ def index(request):
                 urlForm = UrlForm()
                 if(total_bias != None):
                     article = form.save(total_bias, request)
-
+                    title = "blank"
                     for link in total_bias[6]:
                         title = get_title(link[0])
-                        tmp_url = Url(link_url = link[0], article=article, title=title, text=link[1][0], positive = link[1][1]['pos'], negative = link[1][1]['neg'], neutral = link[1][1]['neu'])
+                        tmp_url = Url(link_url = link[0], article=article, title=title, text=link[1][0], positive = (link[1][1]['pos']) *100, negative = (link[1][1]['neg']) * 100, neutral = link[1][1]['neu'] * 100)
                         tmp_url.save()
                     if(total_bias == None):
                         context = {
@@ -72,7 +72,6 @@ def index(request):
                         }
                     else:
                         context = {
-
                             'post':True,
                             'size':total_bias[4],
                             'title':title,
@@ -221,7 +220,7 @@ def divide_sources(articles):
         unique.append(article.website)
     unique = set(unique)
     return unique
-    
+
 @login_required
 def self(request):
     user_articles = Articles.objects.filter(user=request.user).order_by('-posted_on')
@@ -241,3 +240,7 @@ def self(request):
 def test(request):
     context = {}
     return render(request, 'test.html', context)
+
+def naive(request):
+    context = {}
+    return render(request, 'naive.html', context)

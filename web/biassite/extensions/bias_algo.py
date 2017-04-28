@@ -24,8 +24,12 @@ def bias_algo(url):
     unknowns = 0
     gov = 0
     edu = 0
+
+    org_bias = 0
     if(hrefs != None):
         total_links = len(hrefs)
+    if(total_links == 0):
+        total_links = 0
     tlinks  = []
 
     if(hrefs != None):
@@ -49,6 +53,7 @@ def bias_algo(url):
                 print("this is the url " + turl)
 
                 tmp_bias = get_bias(turl)
+                org_bias = tmp_bias
                 if(url_short == turl):
                     self_reference += 1
                 if(tmp_bias != None):
@@ -81,7 +86,7 @@ def bias_algo(url):
         else:
             size = 1
         return_array = []
-        return_array.extend((total_bias, social_meida_ref, self_reference, unknowns, size, total_links, tlinks, gov, edu))
+        return_array.extend((total_bias, social_meida_ref, self_reference, unknowns, size, total_links, tlinks, gov, edu, org_bias))
         '''
         0 total_bias is calculated bias
         1 social_meida_ref is number of links in article to social media
@@ -92,6 +97,7 @@ def bias_algo(url):
         6 tlinks is the array of urls and dict of pos, neg, neu inside of tuple
         7 gov links
         8 edu links
+        9 bias of original site
 
         '''
 

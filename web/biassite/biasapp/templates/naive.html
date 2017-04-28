@@ -1,0 +1,28 @@
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+
+{% load static from staticfiles %}
+<link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+<h3 style="text-align: center;">
+ sentiment of text percentages:
+</h3>
+
+<h4 style="text-align: center;">
+  Using Naive Bayes Algorithim (an algorithim that uses machine learning to determine the sentiment of text) the sentece around each link has been classified as either positive, negative, or neutral.
+</h4>
+<h4 style="text-align: center;">
+  Depending on this result, the 'calculated bias' is adjusted.
+</h4>
+<h4 style="text-align: center;">
+  For example: if a link, going to a fox news article has a negativly sentimented sentence around it, the score with be pushed slighty in the liberal direction.
+</h4>
+
+</div>
+</div>

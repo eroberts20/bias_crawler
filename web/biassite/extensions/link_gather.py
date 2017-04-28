@@ -13,6 +13,8 @@ def url_func_choice(url, soup):
         return  nytimes(soup)
     elif url == "apnews":
         return  apnews(soup)
+    elif "theblaze" in url:
+        return theblaze(soup)
 #   elif url == "huffingtonpost":
 #       return  huffingtonpost(soup)
     elif url == "nbcnews":
@@ -21,10 +23,18 @@ def url_func_choice(url, soup):
         return  fox(soup)
     elif "chicagotribune" in url:
         return chicagotribune(soup)
+    elif "thehill" in url:
+        return thehill(soup)
+    elif "suntimes" in url:
+        return suntimes(soup)
     elif "usatoday" in url:
         return usatoday(soup)
+    #elif "spectator" in url:
+        #return spectator(soup)
     elif "theguardian" in url:
         return theguardian(soup)
+    elif "bloomberg" in url:
+        return bloomberg(soup)
     elif "abcnews" in url:
         return abcnews(soup)
     elif "latimes" in url:
@@ -33,6 +43,8 @@ def url_func_choice(url, soup):
         return buzzfeed(soup)
     elif "fivethirtyeight" in url:
         return fivethirtyeight(soup)
+    elif "bbc" in url:
+        return bbc(soup)
     elif "wsj" in url:
         return wsj(soup)
     else:
@@ -58,7 +70,7 @@ def url_gather(layer, url):
         url = url.split('.com', 1)[0]
 
 
-
+        print("RICKANDMORTY: " + url)
         all_links = url_func_choice(url, soup)
 
 

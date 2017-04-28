@@ -28,8 +28,30 @@ def cnn(html_text):
     html_text = html_text.find("div", {"itemprop": "articleBody"})
     return html_text
 
+def bbc(html_text):
+    html_text = html_text.find("div", {"class":"story-body__inner"})
+    return html_text
+
+def thehill(html_text):
+    html_text = html_text.find("div", {"id":"content"})
+    return html_text
+
+def suntimes(html_text):
+    html_text = html_text.find("div", {"id":"main"})
+    return html_text
+'''
+def spectator(html_text):
+    html_text = html_text.find("div", {"class": "print-only"})
+    return html_text
+'''
+
 def nytimes(html_text):
     html_text = html_text.find("div", {"class":"story-body-supplemental"})
+    return html_text
+
+
+def bloomberg(html_text):
+    html_text = html_text.find("div", {"class":"body-copy"})
     return html_text
 
 def apnews(html_text):
@@ -44,6 +66,10 @@ def huffingtonpost(html_text):
 
 def fox(html_text):
     html_text = html_text.find("div", {"class":"article-text"})
+    return html_text
+
+def theblaze(html_text):
+    html_text = html_text.find("div", {"class": "entry-content article-styles"})
     return html_text
 
 def nbcnews(html_text):
