@@ -70,21 +70,30 @@ def index(request):
                             'page_name':"home",
                             'form':urlForm
                         }
+                    elif(total_bias[5] == 0):
+                        context = {
+                            'post':True,
+                            'total_bias':"No links in the article",
+                            'size':1,
+
+                            'page_name':"home",
+                            'form':urlForm
+                        }
                     else:
                         context = {
                             'post':True,
-                            'size':total_bias[4],
-                            'title':title,
-                            'link':total_bias[6],
-                            'total_bias':total_bias[0],
-                            'self_reference':(total_bias[2]/total_bias[5]) * 100,
-                            'social_meida_ref':total_bias[1],
-                            'unknowns':total_bias[3],
-                            'social_perc':(total_bias[1]/total_bias[5]) * 100,
+                            'size':1,
+                            'total_bias':article.calc_bias,
+                            'self_reference':(article.self_reference/article.total_links) * 100,
+                            'social_meida_ref':article.social_meida_ref,
+                            'unknowns':article.unknown_links,
+                            'social_perc':(article.social_meida_ref/article.total_links) * 100,
                             'page_name':"home",
-                            'total_links':total_bias[5],
-                            'edu':total_bias[8],
-                            'gov':total_bias[7],
+                            'link':article.article_url,
+                            'total_links':article.total_links,
+                            'gov':article.gov_links,
+                            'edu':article.edu_links,
+                            'title':article.title,
                             'form':urlForm
                         }
                 else:

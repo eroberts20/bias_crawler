@@ -45,8 +45,20 @@ def spectator(html_text):
     return html_text
 '''
 
+def breitbart(html_text):
+    html_text = html_text.find("div", {"class":"entry-content"})
+    return html_text
+
+def cbn(html_text):
+    html_text = html_text.find("div", {"class":"field-items"})
+    return html_text
+
 def nytimes(html_text):
     html_text = html_text.find("div", {"class":"story-body-supplemental"})
+    return html_text
+
+def csmonitor(html_text):
+    html_text = html_text.find("div", {"class":"eza-body"})
     return html_text
 
 

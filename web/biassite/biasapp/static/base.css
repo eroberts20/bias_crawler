@@ -8,12 +8,30 @@ a:link {
 
 }
 
+
+p {
+  color: white;
+}
+
+#black {
+  color: black;
+}
+
+h4 {
+  color: white;
+}
+
+h2{
+  color: white;
+}
+h3 {
+  color: white;
+}
+
 #right {
     float: left;
     width: 50%;
 }
-
-
 .dropbtn {
     background-color: #4CAF50;
     color: white;
@@ -88,7 +106,7 @@ margin-left: -200px;
 }
 
 body {
-  background-color: white;
+  background-image: url('pink_dust.png');
 }
 
 html,body

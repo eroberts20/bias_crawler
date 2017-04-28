@@ -13,7 +13,7 @@
   <div class="col-md-4"></div>
   <div class="col-md-2">
     <form  action="{% url 'stats' %}"  method="get">
-        <label for="featured">Pick Website</label>
+        <label for="featured" style="color:white;">Pick Website</label>
         <select class="form-control" name="featured">
             {% for uni in unique %}
               <option   name="featured" value={{uni}} />{{ uni }} </option>

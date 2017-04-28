@@ -24,7 +24,8 @@ def bias_algo(url):
     unknowns = 0
     gov = 0
     edu = 0
-
+    total_links = 0
+    
     org_bias = 0
     if(hrefs != None):
         total_links = len(hrefs)
