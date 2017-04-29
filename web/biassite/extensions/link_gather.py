@@ -41,6 +41,8 @@ def url_func_choice(url, soup):
         return cbn(soup)
     elif "csmonitor" in url:
         return csmonitor(soup)
+    elif "thedailybeast" in url:
+        return thedailybeast(soup)
     elif "abcnews" in url:
         return abcnews(soup)
     elif "latimes" in url:

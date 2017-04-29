@@ -237,12 +237,23 @@ def self(request):
     left_articles = user_articles.filter(calc_bias__lt=0)
     neutral_articles = user_articles.filter(calc_bias=0)
     size = user_articles.count()
-
+    right_percent = (right_articles.count()/size) * 100
+    left_percent = (left_articles.count()/size) * 100
+    print(right_articles)
+    if(right_percent > left_percent):
+        suggestions = user_articles.filter(all_sides_bias__gt=0)
+    else:
+        suggestions = user_articles.filter(all_sides_bias__lt=0)
+    print (suggestions.count())
+    suggestions = divide_sources(suggestions)
+    print (suggestions)
     context = {
         'total_searched':user_articles.count(),
-        'right_percent':(right_articles.count()/size) * 100,
-        'left_percent':(left_articles.count()/size) *100,
+        'right_percent':right_percent,
+        'left_percent':left_percent,
+        'neutral_percent': ((size - (left_articles.count() + right_articles.count()))/size) * 100,
         'user':request.user,
+        'suggestions':suggestions
     }
     return render(request, 'self.html', context)
 

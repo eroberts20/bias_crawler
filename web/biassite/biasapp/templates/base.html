@@ -45,7 +45,7 @@
            </button>
            {% load static %}
            <a class="navbar-brand" href="{% url 'index' %}"> <img alt="Logo" src="{% static 'favicon2.PNG' %}" style="top:-5;" height="35" width="40"/></a>
-           <a class="navbar-brand" href="{% url 'index' %}" style="position:relative;">BiasGuage</a>
+           <a class="navbar-brand" href="{% url 'index' %}" style="position:relative; color:black;">BiasGauge</a>
       </div>
 
 
@@ -56,14 +56,14 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               {% if user.is_authenticated %}
-              <li role="presentation"><a href="{% url 'history' %}" >Previously Searched Articles</a></li>
-              <li role="presentation"><a href="{% url 'self' %}"> Search Stats</a></li>
+              <li role="presentation"><a href="{% url 'history' %}" style="color: black;">Previously Searched Articles</a></li>
+              <li role="presentation"><a href="{% url 'self' %}" style="color: black;"> Search Stats</a></li>
 
               {% endif %}
-              <li role="presentation"><a href="{% url 'stats' %}">Newsites Stats</a></li>
+              <li role="presentation"><a href="{% url 'stats' %}" style="color: black;">Newsites Stats</a></li>
 
 
-              <li role="presentation"><a href="{% url 'about' %}">About Bias Estimator</a></li>
+              <li role="presentation"><a href="{% url 'about' %}" style="color: black;">About Bias Estimator</a></li>
 
 
 
@@ -72,10 +72,10 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
 
-                  <li><a href="{% url 'self' %}">Hi {{request.user.username}}</a></li>
-                  <li ><a href="/logout/">Logout</a></li>
+                  <li><a href="{% url 'self' %}" style="color: black;">Hi {{request.user.username}}</a></li>
+                  <li ><a href="/logout/" style="color: black;">Logout</a></li>
                 {% else %}
-                  <li class="nav navbar-nav navbar-right"><a href="{% url 'login' %}">Log In</a></li>
+                  <li class="nav navbar-nav navbar-right"><a href="{% url 'login' %}" style="color: black;">Log In</a></li>
                 {% endif %}
 
             </ul>

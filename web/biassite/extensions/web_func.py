@@ -53,6 +53,10 @@ def cbn(html_text):
     html_text = html_text.find("div", {"class":"field-items"})
     return html_text
 
+def thedailybeast(html_text):
+    html_text = html_text.find("div", {"class":"ArticleBody"})
+    return html_text
+    
 def nytimes(html_text):
     html_text = html_text.find("div", {"class":"story-body-supplemental"})
     return html_text

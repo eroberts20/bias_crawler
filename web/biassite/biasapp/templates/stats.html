@@ -7,14 +7,15 @@
 {% block content %}
 
 {% load static from staticfiles %}
-<link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'base.css' %}" rel="stylesheet"  type="text/css">
 
 <div class="row" >
-  <div class="col-md-4"></div>
+  <div class="col-md-5"></div>
   <div class="col-md-2">
-    <form  action="{% url 'stats' %}"  method="get">
-        <label for="featured" style="color:white;">Pick Website</label>
-        <select class="form-control" name="featured">
+    <h4 style="width:400px;"  > pick website </h4>
+    <form  action="{% url 'stats' %}" style="display: flex;"  method="get">
+
+        <select class="form-control" style="width:800px;" name="featured">
             {% for uni in unique %}
               <option   name="featured" value={{uni}} />{{ uni }} </option>
 
@@ -22,7 +23,7 @@
             {% endfor %}
             <select>
 
-        <input class="form-control" id="right"  type="submit"  />
+        <input class="form-control" id="right"  style="display: inline-block;" type="submit"  />
 
   </form>
   </div>
@@ -39,8 +40,32 @@
   <div class="col-md-3"></div>
   <div class="col-md-6">
     <h3 class="stats"> {{website }} </h3>
-    <p class="stats"> AllSides.com Bias of this website: {{bias}} </p>
-    <p class="stats" > average bias: {{average_bias |floatformat:5 }} </p>
+<!--------------------------------------------------------------->
+
+  <div class="row">
+          <div class="col-md-2"> </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <p class="stats"> AllSides.com Ranking: {{bias}} </p>
+
+                    <canvas id="myChart2"></canvas>
+
+              </div>
+            </div>
+
+              <div class="col-md-4">
+                <p class="stats" > Average Calc Bias: {{average_bias |floatformat:5 }} </p>
+
+                <div class="text-center">
+                    <canvas id="myChart"></canvas>
+              </div>
+            </div>
+    </div>
+
+
+
+      <!--------------------------------------------------------------->
+      <br/>
     <p class="stats" > average number of links per article: {{average_links |floatformat:5}} </p>
 
    <li class="list-group-item" id="chores">
@@ -77,42 +102,108 @@
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
-<script>
+  <script>
 
-function myFunction() {
-    //  var article1 = articles1;
-    console.dir("{{articles}}");
-    //document.getElementById("chores").innerHTML = "Hello World";
-  //  for(var i = 0; i < article1.length; i++) {
-        // Create the list item:
-        var item = document.createElement('div');
-        var link1 = document.createElement('h4');
-        var link2 = document.createElement('p');
-        var a_in = document.createElement('a');
-      //  a_in.setAttribute('href', "{\% 'article' " + article1[0] + "\%}");
-        a_in.innerHTML = "link to article";
-        link1.appendChild(a_in);
-        link2.appendChild(document.createElement('a')/*.setAttribute('href', article1[i].article_url)*/);
-        item.className = "clearfix";
-        item.appendChild(link1);
-        item.appendChild(link2);
-        // Set its contents:
-        document.getElementById("chores").appendChild(item);
-        console.log("REACHED HERE BITCH");
+  $(function () {
+      var bias = {{average_bias}};
+      var o_bias = {{bias}}
+      var con, o_con
+      var lib, o_lib
+      var neu, o_neu
+      if(bias > 0)
+      {
+        con = bias
+        neu = 1 - bias
+        lib = 0
+      }
+      else if (bias === 0)
+      {
+        neu = 1
+        con = 0
+        lib = 0
+      }
+      else
+      {
+        bias = Math.abs(bias)
+        lib = bias
+        neu = 1 - bias
+        con = 0
+      }
+      if(o_bias > 0)
+      {
+        o_con = o_bias
+        o_neu = 1 - o_bias
+        o_lib = 0
+      }
+      else if (o_bias === 0)
+      {
+        o_neu = 1
+        o_con = 0
+        o_lib = 0
+      }
+      else
+      {
+        o_bias = Math.abs(o_bias)
+        o_lib = o_bias
+        o_neu = 1 - o_bias
+        o_con = 0
+      }
+      var data = [
+      {
+          value: con,
+          color:"#E91D0E",
+          highlight: "#E91D2E",
+          label: "Conservative"
+      },
 
-        // Add it to the list:
-        //list.appendChild(item);
-  //  }
+      {
+          value: lib,
+          color: "#336699",
+          highlight: "#336679",
+          label: "Liberal"
+      },
+      {
+          value: neu,
+          color: "gray",
+          highlight: "gray",
+          label: "Neutral"
+      },
+      ]
 
-}
+      var data2 = [
+      {
+          value: o_con,
+          color:"#E91D0E",
+          highlight: "#E91D2E",
+          label: "Conservative"
+      },
 
-function leaveChange() {
-  if (document.getElementById("leave").value != "100"){
-      document.getElementById("message").innerHTML = "Common message";
-  }
-  else{
-      document.getElementById("message").innerHTML = "Having a Baby!!";
-  }
-}
-</script>
+      {
+          value: o_lib,
+          color: "#336699",
+          highlight: "#336679",
+          label: "Liberal"
+      },
+      {
+          value: o_neu,
+          color: "gray",
+          highlight: "gray",
+          label: "Neutral"
+      },
+      ]
+
+      var option = {
+      responsive: true,
+      };
+
+      // Get the context of the canvas element we want to select
+      var ctx = document.getElementById("myChart").getContext('2d');
+      var ctx2 = document.getElementById("myChart2").getContext('2d');
+      var myDoughnutChart2 = new Chart(ctx2).Doughnut(data2,option);
+      var myDoughnutChart = new Chart(ctx).Doughnut(data,option);});
+
+
+
+
+  </script>
 {% endblock %}

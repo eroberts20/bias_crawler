@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %} BiasGuage {% endblock %}
+{% block title %} BiasGauge {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static "base.css" %}">
@@ -15,7 +15,7 @@
 
 
       <center>
-    <h3><a href="{{article.article_url}}"  target="_blank"  style="color: white; text-decoration: none;"> {{article.title}}</a></h3>
+    <h3><a href="{{article.article_url}}"  target="_blank"  style="color: white; text-decoration: none;"> <u>{{article.title}}</u></a></h3>
 
       <div class="row">
         <div class="col-md-4"></div>
@@ -30,7 +30,7 @@
 
           <h4>Calculated Bias: {{article.calc_bias}}</h4>
           <h4 id="leaning" ></h4>
-
+          <h4> {{article.website}} </h4>
         {% else %}
 
           <h4>No links in article </h4>

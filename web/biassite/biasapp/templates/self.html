@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} BiasGuage {% endblock %}
+{% block title %} BiasGauge {% endblock %}
 
 
 {% block content %}
@@ -35,25 +35,31 @@
   <div class="col-md-4"></div>
   <div class="col-md-4">
 
-    <ul class="list-group" id="averages" style="display:none">
+    <ul class="list-group" id="averages" >
       <li class="list-group-item" id="chores">
-        <p id="black"> All Sides Ranking:1 {{link}}</p>
+        <h3 id="black" style="text-align: center;"> Averages </h3>
         <p id="black"> {{right_percent|floatformat:2}}% of articles searched lean right </p>
         <p id="black"> {{left_percent|floatformat:2}}% of articles searched lean left </p>
+        <p id="black"> {{neutral_percent|floatformat:2}}% of articles searched are neutral </p>
+
       </li>
     </ul>
 
     <ul class="list-group" id="trends" style="display:none">
       <li class="list-group-item" id="chores">
 
-        <p id="black"> All Sides Ranking:2 {{link}}</p
+        <p id="black"> All Sides Ranking:2 {{link}}</p>
       </li>
     </ul>
 
     <ul class="list-group" id="suggestions" style="display:none">
       <li class="list-group-item" id="chores">
 
-        <p id="black"> All Sides Ranking:3 {{link}}</p
+        <p id="black"> All Sides Ranking:3 {{link}}</p>
+        <p id="suggestions_in" ></p>
+        {% for sug in suggestions %}
+          <p id="black"> {{sug}} </p>
+        {% endfor %}
       </li>
     </ul>
   </div>
@@ -62,6 +68,8 @@
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script>
+var right = {{right_percent}}
+var left = {{left_percent}}
 $( "#button1" ).click(function() {
     var q = $('#trends');
     var q2 = $('#suggestions');
@@ -105,5 +113,19 @@ $( "#button3" ).click(function() {
   }
   $( "#suggestions" ).toggle();
 });
+
+if(right > left) {
+  $("#suggestions_in").html("<p id='black'>You're a Republican prick, {{user}}</p>");
+}
+else if(left > right) {
+  $("#suggestions_in").html("<p id='black'>You're a bleading heart Lib, {{user}} </p>");
+}
+else {
+  $("#suggestions_in").html("<p id='black'>You are comlety unbiased,{{user}}, congratulations</p>");
+}
+
+
+
+
 </script>
 {% endblock %}

@@ -9,24 +9,14 @@ a:link {
 }
 
 
-p {
-  color: white;
-}
-
 #black {
   color: black;
 }
 
-h4 {
+h4,h1, h2, h3, p {
   color: white;
 }
 
-h2{
-  color: white;
-}
-h3 {
-  color: white;
-}
 
 #right {
     float: left;
@@ -94,6 +84,8 @@ margin-left: -200px;
   border: none;
   box-shadow: none;
   padding-right: 20px;
+  background-image: url("topography.png");
+
 
 }
 
