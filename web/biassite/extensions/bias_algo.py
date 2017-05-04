@@ -25,7 +25,7 @@ def bias_algo(url):
     gov = 0
     edu = 0
     total_links = 0
-    
+
     org_bias = 0
     if(hrefs != None):
         total_links = len(hrefs)
@@ -37,13 +37,13 @@ def bias_algo(url):
         for h in hrefs:
             turl = h[0]
             push = str.join(u'\n',map(str,h[1]))
-            push = sentiment_api(push)
-            tlinks.append((turl, push))
+            push = sentiment_api(push)  #sentimnet of text in json format
+            tlinks.append((turl, push)) #full url + sentiment
 
             if('.gov' in turl):
-                gov += 1
+                gov += 1 #if government link
             elif('.edu' in turl):
-                edu += 1
+                edu += 1 #if educational link
             else:
                 if('www.' in turl):
                     turl = turl.split('www.', 1)[-1]
@@ -53,11 +53,36 @@ def bias_algo(url):
                 print("*********************")
                 print("this is the url " + turl)
 
+                '''
+
+
+
+
+                '''
+
                 tmp_bias = get_bias(turl)
                 org_bias = tmp_bias
+
+
                 if(url_short == turl):
                     self_reference += 1
                 if(tmp_bias != None):
+                    print(push[1])
+                    if((push[1]['neu'] < push[1]['pos']) and (push[1]['neu'] < push[1]['neg'])):
+                        if(push[1]['pos'] > push[1]['neg']):
+                            if(tmp_bias > 0):
+                                tmp_bias += 0.1
+                            if(tmp_bias < 0):
+                                tmp_bias -= 0.1
+                            if(tmp_bias == 0):
+                                tmp_bias -= 0.01
+                        if( push[1]['neg'] > push[1]['pos'] ):
+                            if(tmp_bias > 0):
+                                tmp_bias -= 0.1
+                            if(tmp_bias < 0):
+                                tmp_bias += 0.1
+                            if(tmp_bias == 0):
+                                tmp_bias += 0.01
                     print("bias ", end='')
                     print(tmp_bias)
                     total_bias = (total_bias + tmp_bias) / 2

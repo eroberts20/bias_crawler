@@ -20,6 +20,20 @@ def washingtonpost(html_text):
     html_text = html_text.find("article")
     return html_text
 
+def thefiscaltimes(html_text):
+    html_text = html_text.find("div", {"class":"field-content"})
+    return html_text
+
+def time(html_text):
+
+    html_text = html_text.find("div", {"data-reactid":"180"})
+    print(html_text)
+    return html_text
+
+def democracynow(html_text):
+    html_text = html_text.find("div", {"class":'headline_summary'})
+    return html_text
+
 def fivethirtyeight(html_text):
     html_text = html_text.find("div", {"class":"entry-content single-post-content"})
     return html_text
@@ -56,7 +70,7 @@ def cbn(html_text):
 def thedailybeast(html_text):
     html_text = html_text.find("div", {"class":"ArticleBody"})
     return html_text
-    
+
 def nytimes(html_text):
     html_text = html_text.find("div", {"class":"story-body-supplemental"})
     return html_text

@@ -247,12 +247,17 @@ def self(request):
     print (suggestions.count())
     suggestions = divide_sources(suggestions)
     print (suggestions)
+    total_bias = 0
+    for i in user_articles:
+            total_bias += i.calc_bias
+    total_bias = total_bias/user_articles.count()
     context = {
         'total_searched':user_articles.count(),
         'right_percent':right_percent,
         'left_percent':left_percent,
         'neutral_percent': ((size - (left_articles.count() + right_articles.count()))/size) * 100,
         'user':request.user,
+        'average_bias':total_bias,
         'suggestions':suggestions
     }
     return render(request, 'self.html', context)

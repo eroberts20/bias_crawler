@@ -11,11 +11,11 @@
 
 <div class="row" >
   <div class="col-md-5"></div>
-  <div class="col-md-2">
+  <div class="col-md-3">
     <h4 style="width:400px;"  > pick website </h4>
-    <form  action="{% url 'stats' %}" style="display: flex;"  method="get">
+    <form  action="{% url 'stats' %}" style="display: flex; "  method="get">
 
-        <select class="form-control" style="width:800px;" name="featured">
+        <select class="form-control" style="width:100%;" name="featured">
             {% for uni in unique %}
               <option   name="featured" value={{uni}} />{{ uni }} </option>
 
@@ -105,7 +105,7 @@
   <script>
 
   $(function () {
-      var bias = {{average_bias}};
+      var bias = {{average_bias}}
       var o_bias = {{bias}}
       var con, o_con
       var lib, o_lib

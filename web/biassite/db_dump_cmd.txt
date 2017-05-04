@@ -1,0 +1,2 @@
+mysqldump -h 127.0.0.1 -P 3306 -u root -p --opt newsdb > newsbd.sql
+

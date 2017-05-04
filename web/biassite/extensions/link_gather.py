@@ -15,8 +15,6 @@ def url_func_choice(url, soup):
         return  apnews(soup)
     elif "theblaze" in url:
         return theblaze(soup)
-#   elif url == "huffingtonpost":
-#       return  huffingtonpost(soup)
     elif url == "nbcnews":
         return  nbcnews(soup)
     elif url == "foxnews":
@@ -29,8 +27,11 @@ def url_func_choice(url, soup):
         return suntimes(soup)
     elif "usatoday" in url:
         return usatoday(soup)
-    #elif "spectator" in url:
-        #return spectator(soup)
+    elif "vox" in url:
+        print("in VOWXSF")
+        return vox(soup)
+    elif "time" in url:
+        return time(soup)
     elif "theguardian" in url:
         return theguardian(soup)
     elif "bloomberg" in url:
@@ -41,6 +42,10 @@ def url_func_choice(url, soup):
         return cbn(soup)
     elif "csmonitor" in url:
         return csmonitor(soup)
+    elif "democracynow" in url:
+        return democracynow(soup)
+    elif "thefiscaltimes" in url:
+        return thefiscaltimes(soup)
     elif "thedailybeast" in url:
         return thedailybeast(soup)
     elif "abcnews" in url:
