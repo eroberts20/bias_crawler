@@ -66,8 +66,9 @@
 
       <!--------------------------------------------------------------->
       <br/>
-    <p class="stats" > average number of links per article: {{average_links |floatformat:5}} </p>
-
+    <p class="stats" > average number of links per article: {{average_links |floatformat:2}} </p>
+    <p class="stats" > average number of social media links per article: {{average_social|floatformat:2}} </p>
+    <p class="stats" > average number of edu links per article: {{average_edu |floatformat:2}} </p>
    <li class="list-group-item" id="chores">
       {% for item in articles %}
 

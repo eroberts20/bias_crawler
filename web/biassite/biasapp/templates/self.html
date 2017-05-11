@@ -38,28 +38,41 @@
     <ul class="list-group" id="averages" >
       <li class="list-group-item" id="chores">
         <h3 id="black" style="text-align: center;"> Averages </h3>
-        <p id="black"> average bias of all searched articles {{average_bias|floatformat:2}} </p>
-        <p id="black"> {{right_percent|floatformat:2}}% of articles searched lean right </p>
-        <p id="black"> {{left_percent|floatformat:2}}% of articles searched lean left </p>
-        <p id="black"> {{neutral_percent|floatformat:2}}% of articles searched are neutral </p>
+        <p id="black"  style="text-align: center;"> average bias of all searched articles {{average_bias|floatformat:2}} </p>
+        <p id="black"  style="text-align: center;"> {{right_percent|floatformat:2}}% of articles searched lean right </p>
+        <p id="black"  style="text-align: center;"> {{left_percent|floatformat:2}}% of articles searched lean left </p>
+        <p id="black"  style="text-align: center;"> {{neutral_percent|floatformat:2}}% of articles searched are neutral </p>
 
       </li>
     </ul>
+    <canvas id="myChart"></canvas>
+    <div  id="trends" style="display:none">
 
-    <ul class="list-group" id="trends" style="display:none">
-      <li class="list-group-item" id="chores">
+      <ul class="list-group">
 
-        <p id="black"> All Sides Ranking:2 {{link}}</p>
-      </li>
-    </ul>
+        <li class="list-group-item" id="chores">
+          <h3 id="black" style="text-align: center;"> Trends </h3>
+          <p id="black"  style="text-align: center;"> Conservative leaning articles: {{right_amount}} </p>
+          <p id="black"  style="text-align: center;"> Liberal leaning articles: {{left_amount}}</p>
+          <p id="black"  style="text-align: center;"> 'Nuertral' articles: {{neutral_amount}}</p>
+        </li>
+      </ul>
+
+    </div>
+
+
 
     <ul class="list-group" id="suggestions" style="display:none">
-      <li class="list-group-item" id="chores">
+      <li class="list-group-item"  id="chores">
 
-        <p id="black"> All Sides Ranking:3 {{link}}</p>
-        <p id="suggestions_in" ></p>
+
+        <p id="suggestions_in"  style="text-align: center;"></p>
+          </li>
+        <li class="list-group-item" id="chores">
+        <p id="black"> Here's a list of sites in our database with viewpoints on the other side: </p>
+
         {% for sug in suggestions %}
-          <p id="black"> {{sug}} </p>
+          <p id="black"  style="text-align: center;"> {{sug}} </p>
         {% endfor %}
       </li>
     </ul>
@@ -76,13 +89,19 @@ $( "#button1" ).click(function() {
     var q2 = $('#suggestions');
     var vis2 = q2.is(':visible');
     var vis = q.is(':visible');
+    var chart = $('#myChart');
+    var chart2 = chart.is(':visible');
     if(vis === true){
       $( "#trends" ).toggle();
     }
     if(vis2 === true){
       $( "#suggestions").toggle();
     }
+    if(chart2 === true){
+      $( "#myChart").toggle();
+    }
     $( "#averages" ).toggle();
+
 
 });
 
@@ -98,6 +117,9 @@ $( "#button2" ).click(function() {
       $( "#suggestions").toggle();
     }
     $( "#trends" ).toggle();
+    $('#myChart').toggle();
+
+
 
 });
 
@@ -106,27 +128,63 @@ $( "#button3" ).click(function() {
   var vis = q.is(':visible');
   var q2 = $('#trends');
   var vis2 = q2.is(':visible');
+  var chart = $('#myChart');
+  var chart2 = chart.is(':visible');
   if(vis === true){
     $( "#averages" ).toggle();
   }
   if(vis2 === true){
     $( "#trends").toggle();
   }
+  if(chart2 === true){
+    $( "#myChart").toggle();
+  }
   $( "#suggestions" ).toggle();
+
+
 });
 
 if(right > left) {
-  $("#suggestions_in").html("<p id='black'>You're a Republican prick, {{user}}</p>");
+  $("#suggestions_in").html("<p id='black'>You tend to look at articles that lean to the right, {{user}}</p>");
 }
 else if(left > right) {
-  $("#suggestions_in").html("<p id='black'>You're a bleading heart Lib, {{user}} </p>");
+  $("#suggestions_in").html("<p id='black'>You tend to view stories that have a liberal bent to them, {{user}} </p>");
 }
 else {
-  $("#suggestions_in").html("<p id='black'>You are comlety unbiased,{{user}}, congratulations</p>");
+  $("#suggestions_in").html("<p id='black'>The majority of the pages you view are neutral in the bias ranking, {{user}}, congratulations</p>");
 }
 
+$(function () {
+
+  var data = [
+      {
+          value: {{right_amount}},
+          color:"#E91D0E",
+          highlight: "#E91D2E",
+          label: "conservative"
+      },
+      {
+          value: {{left_amount}},
+          color: "#336699",
+          highlight: "#336679",
+          label: "liberal"
+      },
+      {
+          value: {{neutral_amount}},
+          color: "gray",
+          highlight: "gray",
+          label: "neutral"
+      }
+  ]
+    var option = {
+    responsive: true,
+    };
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myPieChart = new Chart(ctx).Pie(data,option);});
 
 
+    $('#myChart').toggle();
 
 </script>
 {% endblock %}

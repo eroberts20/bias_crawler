@@ -191,10 +191,14 @@ def stats(request):
 
     average_bias = 0
     average_links = 0
+    average_edu = 0
+    average_social = 0
     if(articles != None):
         for article in articles:
             average_bias = average_bias + article.calc_bias
             average_links = average_links + article.total_links
+            average_social = average_social + article.social_meida_ref
+            average_edu =  average_edu + article.edu_links
 
         average_bias = average_bias / len(articles)
         average_links = average_links / len(articles)
@@ -203,6 +207,8 @@ def stats(request):
             'average_links':average_links,
             'bias':bias,
             'articles1':articles1,
+            'average_social':average_social,
+            'average_edu':average_edu,
             'website':articles[0].website,
             'average_bias':average_bias,
             'articles':articles,
@@ -239,12 +245,11 @@ def self(request):
     size = user_articles.count()
     right_percent = (right_articles.count()/size) * 100
     left_percent = (left_articles.count()/size) * 100
-    print(right_articles)
     if(right_percent > left_percent):
         suggestions = user_articles.filter(all_sides_bias__gt=0)
     else:
         suggestions = user_articles.filter(all_sides_bias__lt=0)
-    print (suggestions.count())
+    print (suggestions)
     suggestions = divide_sources(suggestions)
     print (suggestions)
     total_bias = 0
@@ -258,6 +263,9 @@ def self(request):
         'neutral_percent': ((size - (left_articles.count() + right_articles.count()))/size) * 100,
         'user':request.user,
         'average_bias':total_bias,
+        'left_amount':left_articles.count(),
+        'right_amount':right_articles.count(),
+        'neutral_amount':neutral_articles.count(),
         'suggestions':suggestions
     }
     return render(request, 'self.html', context)
