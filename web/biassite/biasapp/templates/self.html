@@ -44,8 +44,12 @@
         <p id="black"  style="text-align: center;"> {{neutral_percent|floatformat:2}}% of articles searched are neutral </p>
 
       </li>
+      <br/>
+      <p style="text-align: center;" > Pie chart of articles searched and bias </p>
+      <p style="text-align: center;" > neutral is a rank of 0, liberal < 0, conservative > 0</p>
+
     </ul>
-    <canvas id="myChart"></canvas>
+      <canvas id="myChart"></canvas>
     <div  id="trends" style="display:none">
 
       <ul class="list-group">
@@ -54,8 +58,10 @@
           <h3 id="black" style="text-align: center;"> Trends </h3>
           <p id="black"  style="text-align: center;"> Conservative leaning articles: {{right_amount}} </p>
           <p id="black"  style="text-align: center;"> Liberal leaning articles: {{left_amount}}</p>
-          <p id="black"  style="text-align: center;"> 'Nuertral' articles: {{neutral_amount}}</p>
+          <p id="black"  style="text-align: center;"> 'Neurtral' articles: {{neutral_amount}}</p>
         </li>
+        <br/>
+        <p style="text-align: center;" > last ten searched articles </p>
       </ul>
 
     </div>
@@ -72,18 +78,27 @@
         <p id="black"> Here's a list of sites in our database with viewpoints on the other side: </p>
 
         {% for sug in suggestions %}
-          <p id="black"  style="text-align: center;"> {{sug}} </p>
+          <p id="black"  style="text-align: center;"><a href="http://www.google.com/search?q={{sug}}" target="__blank">{{sug}}</a>  </p>
         {% endfor %}
       </li>
+
+
+
     </ul>
+
+
+    <canvas id="myLineChart"></canvas>
+
   </div>
 </div>
 
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script>
-var right = {{right_percent}}
-var left = {{left_percent}}
+
+var right = '{{right_percent}}';
+var left = '{{left_percent}}';
+
 $( "#button1" ).click(function() {
     var q = $('#trends');
     var q2 = $('#suggestions');
@@ -93,15 +108,14 @@ $( "#button1" ).click(function() {
     var chart2 = chart.is(':visible');
     if(vis === true){
       $( "#trends" ).toggle();
+        $( "#myLineChart").toggle();
     }
     if(vis2 === true){
       $( "#suggestions").toggle();
     }
-    if(chart2 === true){
-      $( "#myChart").toggle();
-    }
-    $( "#averages" ).toggle();
 
+    $( "#averages" ).toggle();
+    $( "#myChart").toggle();
 
 });
 
@@ -112,12 +126,14 @@ $( "#button2" ).click(function() {
     var vis2 = q2.is(':visible');
     if(vis === true){
       $( "#averages" ).toggle();
+      $( "#myChart").toggle();
     }
     if(vis2 === true){
       $( "#suggestions").toggle();
     }
     $( "#trends" ).toggle();
-    $('#myChart').toggle();
+    $( "#myLineChart").toggle();
+
 
 
 
@@ -132,12 +148,11 @@ $( "#button3" ).click(function() {
   var chart2 = chart.is(':visible');
   if(vis === true){
     $( "#averages" ).toggle();
+    $( "#myChart").toggle();
   }
   if(vis2 === true){
     $( "#trends").toggle();
-  }
-  if(chart2 === true){
-    $( "#myChart").toggle();
+      $( "#myLineChart").toggle();
   }
   $( "#suggestions" ).toggle();
 
@@ -158,19 +173,19 @@ $(function () {
 
   var data = [
       {
-          value: {{right_amount}},
+          value: '{{right_amount}}',
           color:"#E91D0E",
           highlight: "#E91D2E",
           label: "conservative"
       },
       {
-          value: {{left_amount}},
+          value: '{{left_amount}}',
           color: "#336699",
           highlight: "#336679",
           label: "liberal"
       },
       {
-          value: {{neutral_amount}},
+          value: '{{neutral_amount}}',
           color: "gray",
           highlight: "gray",
           label: "neutral"
@@ -184,7 +199,45 @@ $(function () {
     var myPieChart = new Chart(ctx).Pie(data,option);});
 
 
-    $('#myChart').toggle();
+
+
+
+    $(function () {
+    var option = {
+    responsive: true,
+    };
+
+
+    var data = {
+    labels: [
+            {% for i in most_recent %}
+                "{{i.website|truncatechars:16}}",
+            {% endfor %}
+            ],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "gray",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [
+              {%for i in most_recent %}
+                {{i.calc_bias}},
+              {% endfor %}
+            ]
+        },
+
+    ]
+};
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("myLineChart").getContext('2d');
+    var myLineChart = new Chart(ctx).Line(data, option); //'Line' defines type of the chart.
+    })
+    $( "#myLineChart").toggle();
+
 
 </script>
 {% endblock %}

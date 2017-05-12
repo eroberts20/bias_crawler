@@ -83,6 +83,17 @@ def bias_algo(url):
                                 tmp_bias += 0.1
                             if(tmp_bias == 0):
                                 tmp_bias += 0.01
+
+                    if(gov > 0):
+                        if(tmp_bias > 0):
+                            tmp_bias = tmp_bias - tmp_bias/(gov * 2)
+                        if(tmp_bias < 0):
+                            tmp_bias = tmp_bias + abs(tmp_bias)/(gov * 2)
+                    if(edu > 0):
+                        if(tmp_bias > 0):
+                            tmp_bias = tmp_bias - tmp_bias/(edu * 2)
+                        if(tmp_bias < 0):
+                            tmp_bias = tmp_bias + abs(tmp_bias)/(edu * 2)
                     print("bias ", end='')
                     print(tmp_bias)
                     total_bias = (total_bias + tmp_bias) / 2

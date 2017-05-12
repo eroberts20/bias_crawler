@@ -239,35 +239,40 @@ def divide_sources(articles):
 @login_required
 def self(request):
     user_articles = Articles.objects.filter(user=request.user).order_by('-posted_on')
+    most_recent = Articles.objects.filter(user=request.user).order_by('-posted_on')[:10]
     right_articles = user_articles.filter(calc_bias__gt=0)
     left_articles = user_articles.filter(calc_bias__lt=0)
     neutral_articles = user_articles.filter(calc_bias=0)
     size = user_articles.count()
-    right_percent = (right_articles.count()/size) * 100
-    left_percent = (left_articles.count()/size) * 100
-    if(right_percent > left_percent):
-        suggestions = user_articles.filter(all_sides_bias__gt=0)
+
+    if(size > 0):
+        right_percent = (right_articles.count()/size) * 100
+        left_percent = (left_articles.count()/size) * 100
+        if(right_percent > left_percent):
+            suggestions = user_articles.filter(all_sides_bias__gt=0)
+        else:
+            suggestions = user_articles.filter(all_sides_bias__lt=0)
+        suggestions = divide_sources(suggestions)
+        print (suggestions)
+        total_bias = 0
+        for i in user_articles:
+                total_bias += i.calc_bias
+        total_bias = total_bias/user_articles.count()
+        context = {
+            'total_searched':user_articles.count(),
+            'most_recent':most_recent,
+            'right_percent':right_percent,
+            'left_percent':left_percent,
+            'neutral_percent': ((size - (left_articles.count() + right_articles.count()))/size) * 100,
+            'user':request.user,
+            'average_bias':total_bias,
+            'left_amount':left_articles.count(),
+            'right_amount':right_articles.count(),
+            'neutral_amount':neutral_articles.count(),
+            'suggestions':suggestions
+        }
     else:
-        suggestions = user_articles.filter(all_sides_bias__lt=0)
-    print (suggestions)
-    suggestions = divide_sources(suggestions)
-    print (suggestions)
-    total_bias = 0
-    for i in user_articles:
-            total_bias += i.calc_bias
-    total_bias = total_bias/user_articles.count()
-    context = {
-        'total_searched':user_articles.count(),
-        'right_percent':right_percent,
-        'left_percent':left_percent,
-        'neutral_percent': ((size - (left_articles.count() + right_articles.count()))/size) * 100,
-        'user':request.user,
-        'average_bias':total_bias,
-        'left_amount':left_articles.count(),
-        'right_amount':right_articles.count(),
-        'neutral_amount':neutral_articles.count(),
-        'suggestions':suggestions
-    }
+        context = {}
     return render(request, 'self.html', context)
 
 def test(request):
