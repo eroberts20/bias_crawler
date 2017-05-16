@@ -38,7 +38,7 @@ def index(request):
                 context = {
                     'post':True,
                     'size':1,
-                    'total_bias':article.calc_bias,
+                    'total_bias':article.calc_bias * 100,
                     'self_reference':(article.self_reference/article.total_links) * 100,
                     'social_meida_ref':article.social_meida_ref,
                     'unknowns':article.unknown_links,
@@ -59,7 +59,7 @@ def index(request):
                     title = "blank"
                     for link in total_bias[6]:
                         title = get_title(link[0])
-                        tmp_url = Url(link_url = link[0], article=article, title=title, text=link[1][0], positive = (link[1][1]['pos']) *100, negative = (link[1][1]['neg']) * 100, neutral = link[1][1]['neu'] * 100)
+                        tmp_url = Url(link_url = link[0], article=article, title=title, text=link[1][0], positive = (link[1][1]['pos']) *100, negative = (link[1][1]['neg']) * 100, neutral = link[1][1]['neu'] * 100, all_sides_bias = get_bias(link[0]))
                         tmp_url.save()
                     if(total_bias == None):
                         context = {
@@ -83,7 +83,7 @@ def index(request):
                         context = {
                             'post':True,
                             'size':1,
-                            'total_bias':article.calc_bias,
+                            'total_bias':article.calc_bias * 100,
                             'self_reference':(article.self_reference/article.total_links) * 100,
                             'social_meida_ref':article.social_meida_ref,
                             'unknowns':article.unknown_links,
@@ -138,6 +138,7 @@ def article(request, id):
 
     context = {
         'article':article,
+        'article_bias':article.calc_bias * 100,
         'social_perc': (article.social_meida_ref/article.total_links) * 100,
         'self_reference':(article.self_reference/article.total_links) * 100,
         'unknowns':article.unknown_links,

@@ -31,6 +31,7 @@ class Url(models.Model):
     positive = models.DecimalField(decimal_places = 5, max_digits = 10, default=0.0)
     negative = models.DecimalField(decimal_places = 5, max_digits = 10, default=0.0)
     neutral = models.DecimalField(decimal_places = 5, max_digits = 10, default=0.0)
+    all_sides_bias = models.DecimalField(decimal_places = 5, max_digits = 10, default=0.0, null=True)
 
 class SimilarArticle(models.Model):
     link_url =  models.CharField(max_length=700)

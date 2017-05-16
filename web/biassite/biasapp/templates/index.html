@@ -34,7 +34,7 @@
         {% if size == 1 %}
 
         <div class="text-center">
-          <h3>Calculated Bias: {{total_bias}}</h3>
+          <h3>Calculated Bias: {{total_bias|floatformat:2}}%</h3>
           <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
@@ -143,13 +143,13 @@ $(function () {
         $("#leaning").html("<a href='https://www.allsides.com/bias/right' target='_blank'> right </a>");
       }
       con = bias
-      neu = 1 - bias
+      neu = 100 - bias
       lib = 0
     }
     else if (bias === 0)
     {
       $("#leaning").html("<a href='https://www.allsides.com/bias/center' target='_blank'>center </a>");
-      neu = 1
+      neu = 100
       con = 0
       lib = 0
     }
@@ -164,7 +164,7 @@ $(function () {
       }
       bias = Math.abs(bias)
       lib = bias
-      neu = 1 - bias
+      neu = 100 - bias
       con = 0
     }
     var data = [

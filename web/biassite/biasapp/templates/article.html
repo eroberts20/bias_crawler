@@ -28,7 +28,7 @@
 
         {% if size != 0 %}
 
-          <h4>Calculated Bias: {{article.calc_bias}}</h4>
+          <h4>Calculated Bias: {{article_bias|floatformat:2}}%</h4>
           <h4 id="leaning" ></h4>
           <h4> {{article.website}} </h4>
         {% else %}
@@ -115,7 +115,7 @@
       <li class="list-group-item" id="chores">
 
         <h5 id="indent" id="black"><a href="{{link.link_url}}"  target="_blank"  style="color: #60707c; text-decoration: none;"> {{link.title}} </a></h5>
-        <p id="black"> All Sides Ranking: {{link}}</p>
+        <p id="black"> All Sides Ranking: {{link.all_sides_bias}}</p>
         <div class="dropdown">
           <button type="button" class="btn btn-primary">SENTIMENT OF TEXT </button>
             <div class="dropdown-content">
@@ -190,7 +190,7 @@
   <script>
 
   $(function () {
-      var bias = {{article.calc_bias}};
+      var bias = {{article_bias}};
       var con
       var lib
       var neu
@@ -205,13 +205,13 @@
 
         }
         con = bias
-        neu = 1 - bias
+        neu = 100 - bias
         lib = 0
       }
       else if (bias === 0)
       {
         $("#leaning").html("<a href='https://www.allsides.com/bias/center' target='_blank'>'center' </a>");
-        neu = 1
+        neu = 100
         con = 0
         lib = 0
       }
@@ -226,7 +226,7 @@
         }
         bias = Math.abs(bias)
         lib = bias
-        neu = 1 - bias
+        neu = 100 - bias
         con = 0
       }
       var data = [
