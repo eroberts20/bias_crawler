@@ -646,14 +646,14 @@ class GoogleCloudMlV1beta1TrainingInput(_messages.Message):
       TensorFlow program as the 'job_dir' command-line argument. The benefit
       of specifying this field is that Cloud ML validates the path for use in
       training.
-    masterType: Optional. Specifies the type of virtual machine to use for
-      your training job's master worker.  The following types are supported:
+    mainType: Optional. Specifies the type of virtual machine to use for
+      your training job's main worker.  The following types are supported:
       <dl>   <dt>standard</dt>   <dd>   A basic machine configuration suitable
       for training simple models with   small to moderate datasets.   </dd>
       <dt>large_model</dt>   <dd>   A machine with a lot of memory, specially
       suited for parameter servers   when your model is large (having many
       hidden layers or layers with very   large numbers of nodes).   </dd>
-      <dt>complex_model_s</dt>   <dd>   A machine suitable for the master and
+      <dt>complex_model_s</dt>   <dd>   A machine suitable for the main and
       workers of the cluster when your   model requires more computation than
       the standard machine can handle   satisfactorily.   </dd>
       <dt>complex_model_m</dt>   <dd>   A machine with roughly twice the
@@ -678,7 +678,7 @@ class GoogleCloudMlV1beta1TrainingInput(_messages.Message):
       also set `parameter_server_type`.
     parameterServerType: Optional. Specifies the type of virtual machine to
       use for your training job's parameter server.  The supported values are
-      the same as those described in the entry for `master_type`.  This value
+      the same as those described in the entry for `main_type`.  This value
       must be present when `scaleTier` is set to `CUSTOM` and
       `parameter_server_count` is greater than zero.
     pythonModule: Required. The Python module name to run after installing the
@@ -696,7 +696,7 @@ class GoogleCloudMlV1beta1TrainingInput(_messages.Message):
       to `CUSTOM`. If you set this value, you must also set `worker_type`.
     workerType: Optional. Specifies the type of virtual machine to use for
       your training job's worker nodes.  The supported values are the same as
-      those described in the entry for `masterType`.  This value must be
+      those described in the entry for `mainType`.  This value must be
       present when `scaleTier` is set to `CUSTOM` and `workerCount` is greater
       than zero.
   """
@@ -716,8 +716,8 @@ class GoogleCloudMlV1beta1TrainingInput(_messages.Message):
       CUSTOM: The CUSTOM tier is not a set tier, but rather enables you to use
         your own cluster specification. When you use this tier, set values to
         configure your processing cluster according to these guidelines:  *
-        You _must_ set `TrainingInput.masterType` to specify the type     of
-        machine to use for your master node. This is the only required
+        You _must_ set `TrainingInput.mainType` to specify the type     of
+        machine to use for your main node. This is the only required
         setting.  *   You _may_ set `TrainingInput.workerCount` to specify the
         number of     workers to use. If you specify one or more workers, you
         _must_ also     set `TrainingInput.workerType` to specify the type of
@@ -727,9 +727,9 @@ class GoogleCloudMlV1beta1TrainingInput(_messages.Message):
         servers, you _must_ also set     `TrainingInput.parameterServerType`
         to specify the type of machine to     use for your parameter servers.
         Note that all of your workers must use the same machine type, which
-        can be different from your parameter server type and master type. Your
+        can be different from your parameter server type and main type. Your
         parameter servers must likewise use the same machine type, which can
-        be different from your worker type and master type.
+        be different from your worker type and main type.
     """
     BASIC = 0
     STANDARD_1 = 1
@@ -740,7 +740,7 @@ class GoogleCloudMlV1beta1TrainingInput(_messages.Message):
   args = _messages.StringField(1, repeated=True)
   hyperparameters = _messages.MessageField('GoogleCloudMlV1beta1HyperparameterSpec', 2)
   jobDir = _messages.StringField(3)
-  masterType = _messages.StringField(4)
+  mainType = _messages.StringField(4)
   packageUris = _messages.StringField(5, repeated=True)
   parameterServerCount = _messages.IntegerField(6)
   parameterServerType = _messages.StringField(7)

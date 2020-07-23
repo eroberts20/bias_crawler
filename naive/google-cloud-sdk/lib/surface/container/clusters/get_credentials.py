@@ -67,7 +67,7 @@ class GetCredentials(base.Command):
     log.status.Print('Fetching cluster endpoint and auth data.')
     # Call DescribeCluster to get auth info and cache for next time
     cluster = adapter.GetCluster(cluster_ref)
-    auth = cluster.masterAuth
+    auth = cluster.mainAuth
     has_creds = (auth and ((auth.clientCertificate and auth.clientKey) or
                            (auth.username and auth.password)))
     if not has_creds and not util.ClusterConfig.UseGCPAuthProvider(cluster):

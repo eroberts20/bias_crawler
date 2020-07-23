@@ -227,11 +227,11 @@ class _BaseInstances(object):
     instance_resource = sql_messages.DatabaseInstance(
         region=region,
         databaseVersion=database_version,
-        masterInstanceName=getattr(args, 'master_instance_name', None),
+        mainInstanceName=getattr(args, 'main_instance_name', None),
         settings=settings)
 
-    if hasattr(args, 'master_instance_name'):
-      if args.master_instance_name:
+    if hasattr(args, 'main_instance_name'):
+      if args.main_instance_name:
         replication = 'ASYNCHRONOUS'
         activation_policy = 'ALWAYS'
         if hasattr(args, 'replica_type') and args.replica_type == 'FAILOVER':

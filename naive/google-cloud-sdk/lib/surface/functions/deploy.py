@@ -88,7 +88,7 @@ def _SourceCodeArgs(parser):
             'One of the parameters --source-revision, --source-branch, '
             'or --source-tag can be given to specify the version in the '
             'repository. If none of them are provided, the last revision '
-            'from the master branch is used. If this parameter is given, '
+            'from the main branch is used. If this parameter is given, '
             'the parameter --source is required and describes the path '
             'inside the repository.'))
   source_version_group = parser.add_mutually_exclusive_group()
@@ -102,7 +102,7 @@ def _SourceCodeArgs(parser):
       help=('The branch that will be used to get the source code of the '
             'function.  The most recent revision on this branch will be '
             'used. Can be specified only together with --source-url '
-            'parameter. If not specified defaults to `master`.'))
+            'parameter. If not specified defaults to `main`.'))
   source_version_group.add_argument(
       '--source-tag',
       help="""\
@@ -296,7 +296,7 @@ class Deploy(base.Command):
     if args.source_url:
       messages = self.context['functions_messages']
       source_path = args.source_path
-      source_branch = args.source_branch or 'master'
+      source_branch = args.source_branch or 'main'
       function.sourceRepository = messages.SourceRepository(
           tag=args.source_tag, branch=source_branch,
           revision=args.source_revision, repositoryUrl=args.source_url,

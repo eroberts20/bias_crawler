@@ -63,16 +63,16 @@ def ParseExpireTime(s):
   return expire_dt - times.Now(expire_dt.tzinfo)
 
 
-def TransformMasterVersion(r, undefined=''):
-  """Returns the formatted master version.
+def TransformMainVersion(r, undefined=''):
+  """Returns the formatted main version.
 
   Args:
     r: JSON-serializable object.
     undefined: Returns this value if the resource cannot be formatted.
   Returns:
-    The formatted master version.
+    The formatted main version.
   """
-  version = r.get('currentMasterVersion', None)
+  version = r.get('currentMainVersion', None)
   if version is None:
     return undefined
   if r.get('enableKubernetesAlpha', False):
@@ -91,7 +91,7 @@ def TransformMasterVersion(r, undefined=''):
 
 
 _TRANSFORMS = {
-    'master_version': TransformMasterVersion,
+    'main_version': TransformMainVersion,
 }
 
 

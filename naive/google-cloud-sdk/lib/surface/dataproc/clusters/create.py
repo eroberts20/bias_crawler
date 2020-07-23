@@ -54,8 +54,8 @@ def _CommonArgs(parser):
       type=int,
       help='The number of preemptible worker nodes in the cluster.')
   parser.add_argument(
-      '--master-machine-type',
-      help='The type of machine to use for the master. Defaults to '
+      '--main-machine-type',
+      help='The type of machine to use for the main. Defaults to '
       'server-specified.')
   parser.add_argument(
       '--worker-machine-type',
@@ -96,9 +96,9 @@ def _CommonArgs(parser):
       type=int,
       help='The number of local SSDs to attach to each worker in a cluster.')
   parser.add_argument(
-      '--num-master-local-ssds',
+      '--num-main-local-ssds',
       type=int,
-      help='The number of local SSDs to attach to the master in a cluster.')
+      help='The number of local SSDs to attach to the main in a cluster.')
   parser.add_argument(
       '--initialization-actions',
       type=arg_parsers.ArgList(min_length=1),
@@ -183,12 +183,12 @@ Alias,URI
     additional_scopes='\n'.join(constants.ADDITIONAL_DEFAULT_SCOPE_URIS),
     aliases=compute_helpers.SCOPE_ALIASES_FOR_HELP))
 
-  master_boot_disk = parser.add_mutually_exclusive_group()
+  main_boot_disk = parser.add_mutually_exclusive_group()
   worker_boot_disk = parser.add_mutually_exclusive_group()
 
   # Deprecated, to be removed at a future date.
-  master_boot_disk.add_argument(
-      '--master-boot-disk-size-gb',
+  main_boot_disk.add_argument(
+      '--main-boot-disk-size-gb',
       type=int,
       hidden=True)
   worker_boot_disk.add_argument(
@@ -203,8 +203,8 @@ Alias,URI
       ``10GB'' will produce a 10 gigabyte disk. The minimum size a boot disk
       can have is 10 GB. Disk size must be a multiple of 1 GB.
       """
-  master_boot_disk.add_argument(
-      '--master-boot-disk-size',
+  main_boot_disk.add_argument(
+      '--main-boot-disk-size',
       type=arg_parsers.BinarySize(lower_bound='10GB'),
       help=boot_disk_size_detailed_help)
   worker_boot_disk.add_argument(
@@ -240,15 +240,15 @@ class Create(base.CreateCommand):
   @staticmethod
   def Args(parser):
     _CommonArgs(parser)
-    parser.add_argument('--num-masters', type=int, hidden=True)
+    parser.add_argument('--num-mains', type=int, hidden=True)
     parser.add_argument('--single-node', action='store_true', hidden=True)
 
   @staticmethod
   def ValidateArgs(args):
-    if args.master_boot_disk_size_gb:
-      log.warn('The --master-boot-disk-size-gb flag is deprecated. '
-               'Use equivalent --master-boot-disk-size=%sGB flag.',
-               args.master_boot_disk_size_gb)
+    if args.main_boot_disk_size_gb:
+      log.warn('The --main-boot-disk-size-gb flag is deprecated. '
+               'Use equivalent --main-boot-disk-size=%sGB flag.',
+               args.main_boot_disk_size_gb)
 
     if args.worker_boot_disk_size_gb:
       log.warn('The --worker-boot-disk-size-gb flag is deprecated. '
@@ -281,14 +281,14 @@ class Create(base.CreateCommand):
     compute_resources = compute_helpers.GetComputeResources(
         self.ReleaseTrack(), args.name)
 
-    master_accelerator_type = None
+    main_accelerator_type = None
     worker_accelerator_type = None
-    master_accelerator_count = None
+    main_accelerator_count = None
     worker_accelerator_count = None
     if self.ReleaseTrack() == base.ReleaseTrack.BETA:
-      if args.master_accelerator:
-        master_accelerator_type = args.master_accelerator['type']
-        master_accelerator_count = args.master_accelerator.get('count', 1)
+      if args.main_accelerator:
+        main_accelerator_type = args.main_accelerator['type']
+        main_accelerator_count = args.main_accelerator.get('count', 1)
       if args.worker_accelerator:
         worker_accelerator_type = args.worker_accelerator['type']
         worker_accelerator_count = args.worker_accelerator.get('count', 1)
@@ -297,9 +297,9 @@ class Create(base.CreateCommand):
     zone_ref = compute_resources.Parse(None, collection='compute.zones')
     image_ref = args.image and compute_resources.Parse(
         args.image, collection='compute.images')
-    master_machine_type_ref = (
-        args.master_machine_type and compute_resources.Parse(
-            args.master_machine_type, collection='compute.machineTypes'))
+    main_machine_type_ref = (
+        args.main_machine_type and compute_resources.Parse(
+            args.main_machine_type, collection='compute.machineTypes'))
     worker_machine_type_ref = (
         args.worker_machine_type and compute_resources.Parse(
             args.worker_machine_type, collection='compute.machineTypes'))
@@ -307,9 +307,9 @@ class Create(base.CreateCommand):
         args.network, collection='compute.networks')
     subnetwork_ref = args.subnet and compute_resources.Parse(
         args.subnet, collection='compute.subnetworks')
-    master_accelerator_type_ref = (
-        master_accelerator_type and compute_resources.Parse(
-            master_accelerator_type, collection='compute.acceleratorTypes'))
+    main_accelerator_type_ref = (
+        main_accelerator_type and compute_resources.Parse(
+            main_accelerator_type, collection='compute.acceleratorTypes'))
     worker_accelerator_type_ref = (
         worker_accelerator_type and compute_resources.Parse(
             worker_accelerator_type, collection='compute.acceleratorTypes'))
@@ -325,10 +325,10 @@ class Create(base.CreateCommand):
     software_config = messages.SoftwareConfig(
         imageVersion=args.image_version)
 
-    master_boot_disk_size_gb = args.master_boot_disk_size_gb
-    if args.master_boot_disk_size:
-      master_boot_disk_size_gb = (
-          api_utils.BytesToGb(args.master_boot_disk_size))
+    main_boot_disk_size_gb = args.main_boot_disk_size_gb
+    if args.main_boot_disk_size:
+      main_boot_disk_size_gb = (
+          api_utils.BytesToGb(args.main_boot_disk_size))
 
     worker_boot_disk_size_gb = args.worker_boot_disk_size_gb
     if args.worker_boot_disk_size:
@@ -360,13 +360,13 @@ class Create(base.CreateCommand):
       gce_cluster_config.metadata = encoding.DictToMessage(
           flat_metadata, messages.GceClusterConfig.MetadataValue)
 
-    master_accelerators = []
-    if master_accelerator_type:
-      master_accelerators.append(
+    main_accelerators = []
+    if main_accelerator_type:
+      main_accelerators.append(
           messages.AcceleratorConfig(
-              acceleratorTypeUri=master_accelerator_type_ref and
-              master_accelerator_type_ref.SelfLink(),
-              acceleratorCount=master_accelerator_count))
+              acceleratorTypeUri=main_accelerator_type_ref and
+              main_accelerator_type_ref.SelfLink(),
+              acceleratorCount=main_accelerator_count))
     worker_accelerators = []
     if worker_accelerator_type:
       worker_accelerators.append(messages.AcceleratorConfig(
@@ -377,15 +377,15 @@ class Create(base.CreateCommand):
     cluster_config = messages.ClusterConfig(
         configBucket=args.bucket,
         gceClusterConfig=gce_cluster_config,
-        masterConfig=messages.InstanceGroupConfig(
-            numInstances=args.num_masters,
+        mainConfig=messages.InstanceGroupConfig(
+            numInstances=args.num_mains,
             imageUri=image_ref and image_ref.SelfLink(),
-            machineTypeUri=master_machine_type_ref and
-            master_machine_type_ref.SelfLink(),
-            accelerators=master_accelerators,
+            machineTypeUri=main_machine_type_ref and
+            main_machine_type_ref.SelfLink(),
+            accelerators=main_accelerators,
             diskConfig=messages.DiskConfig(
-                bootDiskSizeGb=master_boot_disk_size_gb,
-                numLocalSsds=args.num_master_local_ssds,
+                bootDiskSizeGb=main_boot_disk_size_gb,
+                numLocalSsds=args.num_main_local_ssds,
             ),
         ),
         workerConfig=messages.InstanceGroupConfig(
@@ -470,14 +470,14 @@ class CreateBeta(Create):
   def Args(parser):
     _CommonArgs(parser)
     parser.add_argument(
-        '--num-masters',
+        '--num-mains',
         type=int,
         help="""\
-      The number of master nodes in the cluster.
+      The number of main nodes in the cluster.
 
       [format="csv",options="header"]
       |========
-      Number of Masters,Cluster Mode
+      Number of Mains,Cluster Mode
       1,Standard
       3,High Availability
       |========
@@ -489,11 +489,11 @@ class CreateBeta(Create):
         help="""\
       Create a single node cluster.
 
-      A single node cluster has all master and worker components.
+      A single node cluster has all main and worker components.
       It cannot have any separate worker nodes.
       """)
 
-    for instance_type in ('master', 'worker'):
+    for instance_type in ('main', 'worker'):
       help_msg = """\
       Attaches accelerators (e.g. GPUs) to the {instance_type}
       instance(s).
@@ -524,10 +524,10 @@ class CreateBeta(Create):
 
   @staticmethod
   def ValidateArgs(args):
-    if args.master_accelerator and 'type' not in args.master_accelerator:
+    if args.main_accelerator and 'type' not in args.main_accelerator:
       raise exceptions.InvalidArgumentException(
-          '--master-accelerator', 'accelerator type must be specified. '
-          'e.g. --master-accelerator type=nvidia-tesla-k80,count=2')
+          '--main-accelerator', 'accelerator type must be specified. '
+          'e.g. --main-accelerator type=nvidia-tesla-k80,count=2')
     if args.worker_accelerator and 'type' not in args.worker_accelerator:
       raise exceptions.InvalidArgumentException(
           '--worker-accelerator', 'accelerator type must be specified. '

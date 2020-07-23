@@ -115,11 +115,11 @@ class _BaseCreate(object):
         'instance',
         help='Cloud SQL instance ID.')
     parser.add_argument(
-        '--master-instance-name',
+        '--main-instance-name',
         required=False,
-        help='Name of the instance which will act as master in the replication '
+        help='Name of the instance which will act as main in the replication '
         'setup. The newly created instance will be a read replica of the '
-        'specified master instance.')
+        'specified main instance.')
     parser.add_argument(
         '--on-premises-host-port',
         required=False,

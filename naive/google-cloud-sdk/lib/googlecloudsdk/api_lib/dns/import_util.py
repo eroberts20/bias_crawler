@@ -74,7 +74,7 @@ def _SOATranslation(rdata, origin):
 
   Returns:
     str, The translation of the given SOA rdata which includes all the required
-    SOA fields. Note that the master NS name is left in a substitutable form
+    SOA fields. Note that the main NS name is left in a substitutable form
     because it is always provided by Cloud DNS.
   """
   return ' '.join(
@@ -230,7 +230,7 @@ def RecordSetsFromZoneFile(zone_file, domain):
     A (name, type) keyed dict of ResourceRecordSets that were obtained from the
     zone file. Note that only A, AAAA, CNAME, MX, PTR, SOA, SPF, SRV, and TXT
     record-sets are retrieved. Other record-set types are not supported by Cloud
-    DNS. Also, the master NS field for SOA records is discarded since that is
+    DNS. Also, the main NS field for SOA records is discarded since that is
     provided by Cloud DNS.
   """
   zone_contents = zone.from_file(zone_file, domain, check_origin=False)
@@ -252,7 +252,7 @@ def RecordSetsFromYamlFile(yaml_file):
     A (name, type) keyed dict of ResourceRecordSets that were obtained from the
     yaml file. Note that only A, AAAA, CNAME, MX, PTR, SOA, SPF, SRV, and TXT
     record-sets are retrieved. Other record-set types are not supported by Cloud
-    DNS. Also, the master NS field for SOA records is discarded since that is
+    DNS. Also, the main NS field for SOA records is discarded since that is
     provided by Cloud DNS.
   """
   record_sets = {}
@@ -272,7 +272,7 @@ def RecordSetsFromYamlFile(yaml_file):
     record_set.rrdatas = yaml_record_set['rrdatas']
 
     if rdata_type is rdatatype.SOA:
-      # Make master NS name substitutable.
+      # Make main NS name substitutable.
       record_set.rrdatas[0] = re.sub(r'\S+', '{0}', record_set.rrdatas[0],
                                      count=1)
 
@@ -300,14 +300,14 @@ def _RecordSetCopy(record_set):
 
 
 def _SOAReplacement(current_record, record_to_be_imported):
-  """Returns the replacement SOA record with restored master NS name.
+  """Returns the replacement SOA record with restored main NS name.
 
   Args:
     current_record: ResourceRecordSet, Current record-set.
     record_to_be_imported: ResourceRecordSet, Record-set to be imported.
 
   Returns:
-    ResourceRecordSet, the replacement SOA record with restored master NS name.
+    ResourceRecordSet, the replacement SOA record with restored main NS name.
   """
   replacement = _RecordSetCopy(record_to_be_imported)
   replacement.rrdatas[0] = replacement.rrdatas[0].format(

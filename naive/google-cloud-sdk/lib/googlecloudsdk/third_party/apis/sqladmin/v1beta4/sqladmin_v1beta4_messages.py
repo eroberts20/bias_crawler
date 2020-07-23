@@ -210,14 +210,14 @@ class DatabaseInstance(_messages.Message):
       property is applicable only to Second Generation instances.
     instanceType: The instance type. This can be one of the following.
       CLOUD_SQL_INSTANCE: A Cloud SQL instance that is not replicating from a
-      master. ON_PREMISES_INSTANCE: An instance running on the customer's
+      main. ON_PREMISES_INSTANCE: An instance running on the customer's
       premises. READ_REPLICA_INSTANCE: A Cloud SQL instance configured as a
       read-replica.
     ipAddresses: The assigned IP addresses for the instance.
     ipv6Address: The IPv6 address assigned to the instance. This property is
       applicable only to First Generation instances.
     kind: This is always sql#instance.
-    masterInstanceName: The name of the instance which will act as master in
+    mainInstanceName: The name of the instance which will act as main in
       the replication setup.
     maxDiskSize: The maximum disk size of the instance in bytes.
     name: Name of the Cloud SQL instance. This does not include the project
@@ -231,7 +231,7 @@ class DatabaseInstance(_messages.Message):
       type (First Generation or Second Generation). The region can not be
       changed after instance creation.
     replicaConfiguration: Configuration specific to read-replicas replicating
-      from on-premises masters.
+      from on-premises mains.
     replicaNames: The replicas of the instance.
     selfLink: The URI of this resource.
     serverCaCert: SSL configuration.
@@ -256,7 +256,7 @@ class DatabaseInstance(_messages.Message):
 
     Fields:
       available: The availability status of the failover replica. A false
-        status indicates that the failover replica is out of sync. The master
+        status indicates that the failover replica is out of sync. The main
         can only failover to the falover replica when the status is true.
       name: The name of the failover replica. If specified at instance
         creation, a failover replica is created for the instance. The name
@@ -277,7 +277,7 @@ class DatabaseInstance(_messages.Message):
   ipAddresses = _messages.MessageField('IpMapping', 8, repeated=True)
   ipv6Address = _messages.StringField(9)
   kind = _messages.StringField(10, default=u'sql#instance')
-  masterInstanceName = _messages.StringField(11)
+  mainInstanceName = _messages.StringField(11)
   maxDiskSize = _messages.IntegerField(12)
   name = _messages.StringField(13)
   onPremisesConfiguration = _messages.MessageField('OnPremisesConfiguration', 14)
@@ -620,24 +620,24 @@ class MySqlReplicaConfiguration(_messages.Message):
 
   Fields:
     caCertificate: PEM representation of the trusted CA's x509 certificate.
-    clientCertificate: PEM representation of the slave's x509 certificate.
-    clientKey: PEM representation of the slave's private key. The
+    clientCertificate: PEM representation of the subordinate's x509 certificate.
+    clientKey: PEM representation of the subordinate's private key. The
       corresponsing public key is encoded in the client's certificate.
     connectRetryInterval: Seconds to wait between connect retries. MySQL's
       default is 60 seconds.
     dumpFilePath: Path to a SQL dump file in Google Cloud Storage from which
-      the slave instance is to be created. The URI is in the form
+      the subordinate instance is to be created. The URI is in the form
       gs://bucketName/fileName. Compressed gzip files (.gz) are also
       supported. Dumps should have the binlog co-ordinates from which
-      replication should begin. This can be accomplished by setting --master-
+      replication should begin. This can be accomplished by setting --main-
       data to 1 when using mysqldump.
     kind: This is always sql#mysqlReplicaConfiguration.
-    masterHeartbeatPeriod: Interval in milliseconds between replication
+    mainHeartbeatPeriod: Interval in milliseconds between replication
       heartbeats.
     password: The password for the replication connection.
     sslCipher: A list of permissible ciphers to use for SSL encryption.
     username: The username for the replication connection.
-    verifyServerCertificate: Whether or not to check the master's Common Name
+    verifyServerCertificate: Whether or not to check the main's Common Name
       value in the certificate that it sends during the SSL handshake.
   """
 
@@ -647,7 +647,7 @@ class MySqlReplicaConfiguration(_messages.Message):
   connectRetryInterval = _messages.IntegerField(4, variant=_messages.Variant.INT32)
   dumpFilePath = _messages.StringField(5)
   kind = _messages.StringField(6, default=u'sql#mysqlReplicaConfiguration')
-  masterHeartbeatPeriod = _messages.IntegerField(7)
+  mainHeartbeatPeriod = _messages.IntegerField(7)
   password = _messages.StringField(8)
   sslCipher = _messages.StringField(9)
   username = _messages.StringField(10)
@@ -761,22 +761,22 @@ class OperationsListResponse(_messages.Message):
 
 
 class ReplicaConfiguration(_messages.Message):
-  """Read-replica configuration for connecting to the master.
+  """Read-replica configuration for connecting to the main.
 
   Fields:
     failoverTarget: Specifies if the replica is the failover target. If the
       field is set to true the replica will be designated as a failover
-      replica. In case the master instance fails, the replica instance will be
-      promoted as the new master instance. Only one replica can be specified
+      replica. In case the main instance fails, the replica instance will be
+      promoted as the new main instance. Only one replica can be specified
       as failover target, and the replica has to be in different zone with the
-      master instance.
+      main instance.
     kind: This is always sql#replicaConfiguration.
     mysqlReplicaConfiguration: MySQL specific configuration when replicating
-      from a MySQL on-premises master. Replication configuration information
+      from a MySQL on-premises main. Replication configuration information
       such as the username, password, certificates, and keys are not stored in
       the instance metadata. The configuration information is used only to set
       up the replication connection and is stored by MySQL in a file named
-      master.info in the data directory.
+      main.info in the data directory.
   """
 
   failoverTarget = _messages.BooleanField(1)

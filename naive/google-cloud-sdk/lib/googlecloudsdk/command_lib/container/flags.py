@@ -46,7 +46,7 @@ using the following command.
 def AddClusterVersionFlag(parser, suppressed=False, help=None):  # pylint: disable=redefined-builtin
   """Adds a --cluster-version flag to the given parser."""
   help_text = argparse.SUPPRESS if suppressed else help or """\
-The Kubernetes version to use for the master and nodes. Defaults to
+The Kubernetes version to use for the main and nodes. Defaults to
 server-specified.
 
 The default Kubernetes version are available using the following command.

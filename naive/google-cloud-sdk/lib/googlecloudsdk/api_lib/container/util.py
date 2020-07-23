@@ -139,8 +139,8 @@ class ClusterConfig(object):
 
   @staticmethod
   def UseGCPAuthProvider(cluster):
-    return (cluster.currentMasterVersion and
-            dist_version.LooseVersion(cluster.currentMasterVersion) >=
+    return (cluster.currentMainVersion and
+            dist_version.LooseVersion(cluster.currentMainVersion) >=
             dist_version.LooseVersion(MIN_GCP_AUTH_PROVIDER_VERSION) and
             not properties.VALUES.container.use_client_certificate.GetBool())
 
@@ -211,7 +211,7 @@ class ClusterConfig(object):
         'project_id': project_id,
         'server': 'https://' + cluster.endpoint,
     }
-    auth = cluster.masterAuth
+    auth = cluster.mainAuth
     if auth and auth.clusterCaCertificate:
       kwargs['ca_data'] = auth.clusterCaCertificate
     else:

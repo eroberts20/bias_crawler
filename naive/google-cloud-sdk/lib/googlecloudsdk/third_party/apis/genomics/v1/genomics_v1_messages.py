@@ -1216,8 +1216,8 @@ class ImportVariantsRequest(_messages.Message):
       FORMAT_UNSPECIFIED: <no description>
       FORMAT_VCF: VCF (Variant Call Format). The VCF files may be gzip
         compressed. gVCF is also supported.
-      FORMAT_COMPLETE_GENOMICS: Complete Genomics masterVarBeta format. The
-        masterVarBeta files may be bzip2 compressed.
+      FORMAT_COMPLETE_GENOMICS: Complete Genomics mainVarBeta format. The
+        mainVarBeta files may be bzip2 compressed.
     """
     FORMAT_UNSPECIFIED = 0
     FORMAT_VCF = 1

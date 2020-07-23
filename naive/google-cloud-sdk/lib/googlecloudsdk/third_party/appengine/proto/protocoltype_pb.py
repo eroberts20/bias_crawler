@@ -1053,8 +1053,8 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
   proto_name_ = ""
   has_proto2_file_descriptor_ = 0
   proto2_file_descriptor_ = ""
-  has_proto2_file_master_ = 0
-  proto2_file_master_ = ""
+  has_proto2_file_main_ = 0
+  proto2_file_main_ = ""
   has_proto2_name_ = 0
   proto2_name_ = ""
   has_proto2_extension_info_ = 0
@@ -1151,18 +1151,18 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
 
   def has_proto2_file_descriptor(self): return self.has_proto2_file_descriptor_
 
-  def proto2_file_master(self): return self.proto2_file_master_
+  def proto2_file_main(self): return self.proto2_file_main_
 
-  def set_proto2_file_master(self, x):
-    self.has_proto2_file_master_ = 1
-    self.proto2_file_master_ = x
+  def set_proto2_file_main(self, x):
+    self.has_proto2_file_main_ = 1
+    self.proto2_file_main_ = x
 
-  def clear_proto2_file_master(self):
-    if self.has_proto2_file_master_:
-      self.has_proto2_file_master_ = 0
-      self.proto2_file_master_ = ""
+  def clear_proto2_file_main(self):
+    if self.has_proto2_file_main_:
+      self.has_proto2_file_main_ = 0
+      self.proto2_file_main_ = ""
 
-  def has_proto2_file_master(self): return self.has_proto2_file_master_
+  def has_proto2_file_main(self): return self.has_proto2_file_main_
 
   def proto2_name(self): return self.proto2_name_
 
@@ -1212,7 +1212,7 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
     for i in xrange(x.tag_size()): self.add_tag().CopyFrom(x.tag(i))
     for i in xrange(x.enumtype_size()): self.add_enumtype().CopyFrom(x.enumtype(i))
     if (x.has_proto2_file_descriptor()): self.set_proto2_file_descriptor(x.proto2_file_descriptor())
-    if (x.has_proto2_file_master()): self.set_proto2_file_master(x.proto2_file_master())
+    if (x.has_proto2_file_main()): self.set_proto2_file_main(x.proto2_file_main())
     if (x.has_proto2_name()): self.set_proto2_name(x.proto2_name())
     if (x.has_proto2_extension_info()): self.set_proto2_extension_info(x.proto2_extension_info())
     if (x.has_proto2_file_scope_info()): self.set_proto2_file_scope_info(x.proto2_file_scope_info())
@@ -1260,8 +1260,8 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
       if e1 != e2: return 0
     if self.has_proto2_file_descriptor_ != x.has_proto2_file_descriptor_: return 0
     if self.has_proto2_file_descriptor_ and self.proto2_file_descriptor_ != x.proto2_file_descriptor_: return 0
-    if self.has_proto2_file_master_ != x.has_proto2_file_master_: return 0
-    if self.has_proto2_file_master_ and self.proto2_file_master_ != x.proto2_file_master_: return 0
+    if self.has_proto2_file_main_ != x.has_proto2_file_main_: return 0
+    if self.has_proto2_file_main_ and self.proto2_file_main_ != x.proto2_file_main_: return 0
     if self.has_proto2_name_ != x.has_proto2_name_: return 0
     if self.has_proto2_name_ and self.proto2_name_ != x.proto2_name_: return 0
     if self.has_proto2_extension_info_ != x.has_proto2_extension_info_: return 0
@@ -1296,7 +1296,7 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
     n += 2 * len(self.enumtype_)
     for i in xrange(len(self.enumtype_)): n += self.enumtype_[i].ByteSize()
     if (self.has_proto2_file_descriptor_): n += 2 + self.lengthString(len(self.proto2_file_descriptor_))
-    if (self.has_proto2_file_master_): n += 2 + self.lengthString(len(self.proto2_file_master_))
+    if (self.has_proto2_file_main_): n += 2 + self.lengthString(len(self.proto2_file_main_))
     if (self.has_proto2_name_): n += 2 + self.lengthString(len(self.proto2_name_))
     if (self.has_proto2_extension_info_): n += 2 + self.lengthString(len(self.proto2_extension_info_))
     if (self.has_proto2_file_scope_info_): n += 2 + self.lengthString(len(self.proto2_file_scope_info_))
@@ -1316,7 +1316,7 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
     n += 2 * len(self.enumtype_)
     for i in xrange(len(self.enumtype_)): n += self.enumtype_[i].ByteSizePartial()
     if (self.has_proto2_file_descriptor_): n += 2 + self.lengthString(len(self.proto2_file_descriptor_))
-    if (self.has_proto2_file_master_): n += 2 + self.lengthString(len(self.proto2_file_master_))
+    if (self.has_proto2_file_main_): n += 2 + self.lengthString(len(self.proto2_file_main_))
     if (self.has_proto2_name_): n += 2 + self.lengthString(len(self.proto2_name_))
     if (self.has_proto2_extension_info_): n += 2 + self.lengthString(len(self.proto2_extension_info_))
     if (self.has_proto2_file_scope_info_): n += 2 + self.lengthString(len(self.proto2_file_scope_info_))
@@ -1329,7 +1329,7 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
     self.clear_tag()
     self.clear_enumtype()
     self.clear_proto2_file_descriptor()
-    self.clear_proto2_file_master()
+    self.clear_proto2_file_main()
     self.clear_proto2_name()
     self.clear_proto2_extension_info()
     self.clear_proto2_file_scope_info()
@@ -1350,9 +1350,9 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
     if (self.has_proto2_file_descriptor_):
       out.putVarInt32(186)
       out.putPrefixedString(self.proto2_file_descriptor_)
-    if (self.has_proto2_file_master_):
+    if (self.has_proto2_file_main_):
       out.putVarInt32(194)
-      out.putPrefixedString(self.proto2_file_master_)
+      out.putPrefixedString(self.proto2_file_main_)
     if (self.has_proto2_name_):
       out.putVarInt32(202)
       out.putPrefixedString(self.proto2_name_)
@@ -1384,9 +1384,9 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
     if (self.has_proto2_file_descriptor_):
       out.putVarInt32(186)
       out.putPrefixedString(self.proto2_file_descriptor_)
-    if (self.has_proto2_file_master_):
+    if (self.has_proto2_file_main_):
       out.putVarInt32(194)
-      out.putPrefixedString(self.proto2_file_master_)
+      out.putPrefixedString(self.proto2_file_main_)
     if (self.has_proto2_name_):
       out.putVarInt32(202)
       out.putPrefixedString(self.proto2_name_)
@@ -1419,7 +1419,7 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
         self.set_proto2_file_descriptor(d.getPrefixedString())
         continue
       if tt == 194:
-        self.set_proto2_file_master(d.getPrefixedString())
+        self.set_proto2_file_main(d.getPrefixedString())
         continue
       if tt == 202:
         self.set_proto2_name(d.getPrefixedString())
@@ -1461,7 +1461,7 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
       res+=prefix+"}\n"
       cnt+=1
     if self.has_proto2_file_descriptor_: res+=prefix+("proto2_file_descriptor: %s\n" % self.DebugFormatString(self.proto2_file_descriptor_))
-    if self.has_proto2_file_master_: res+=prefix+("proto2_file_master: %s\n" % self.DebugFormatString(self.proto2_file_master_))
+    if self.has_proto2_file_main_: res+=prefix+("proto2_file_main: %s\n" % self.DebugFormatString(self.proto2_file_main_))
     if self.has_proto2_name_: res+=prefix+("proto2_name: %s\n" % self.DebugFormatString(self.proto2_name_))
     if self.has_proto2_extension_info_: res+=prefix+("proto2_extension_info: %s\n" % self.DebugFormatString(self.proto2_extension_info_))
     if self.has_proto2_file_scope_info_: res+=prefix+("proto2_file_scope_info: %s\n" % self.DebugFormatString(self.proto2_file_scope_info_))
@@ -1499,7 +1499,7 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
   kEnumTypeproto2_name = 31
   kEnumTypeallow_alias = 33
   kproto2_file_descriptor = 23
-  kproto2_file_master = 24
+  kproto2_file_main = 24
   kproto2_name = 25
   kproto2_extension_info = 29
   kproto2_file_scope_info = 30
@@ -1529,7 +1529,7 @@ class ProtocolDescriptor(ProtocolBuffer.ProtocolMessage):
     21: "name",
     22: "value",
     23: "proto2_file_descriptor",
-    24: "proto2_file_master",
+    24: "proto2_file_main",
     25: "proto2_name",
     26: "deprecated",
     27: "proto_name",

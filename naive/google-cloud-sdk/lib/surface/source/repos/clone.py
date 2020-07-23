@@ -52,7 +52,7 @@ class CloneGA(base.Command):
             $ gcloud source repos clone default TARGET_DIR
             $ cd TARGET_DIR
             ... create/edit files and create one or more commits ...
-            $ git push origin master
+            $ git push origin main
       """),
   }
 
@@ -125,7 +125,7 @@ class CloneAlpha(base.Command):
             $ gcloud source repos clone default TARGET_DIR
             $ cd TARGET_DIR
             ... create/edit files and create one or more commits ...
-            $ git push origin master
+            $ git push origin main
       """),
   }
 
